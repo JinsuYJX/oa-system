@@ -1,13 +1,12 @@
-package com.azwcl.oa.provider;
+package com.azwcl.oa;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * oa 系统 application
- *
+ * oa 启动 application
+ * 
  * @author az
- * @date 2022/09/04
  */
 @SpringBootApplication
 public class OaApplication {
