@@ -72,8 +72,9 @@ public abstract class AbstractFileOperate {
      *
      * @param path     文件路径
      * @param filename 文件名
+     * @return 文件存在与否 true-存在，false-不存在
      */
-    public abstract void isExist(String path, String filename);
+    public abstract Boolean isExist(String path, String filename);
 
     /**
      * 搜索目录下内容
