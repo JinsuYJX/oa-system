@@ -58,6 +58,43 @@ CREATE TABLE `SYS_MENU`
   COLLATE UTF8MB4_0900_AI_CI COMMENT '系统菜单表'
   ROW_FORMAT = DYNAMIC;
 
+-- --------------------------------------------------------------------------
+-- table structure for sys_rsre
+-- --------------------------------------------------------------------------
+DROP TABLE IF EXISTS `SYS_RSRE`;
+CREATE TABLE `SYS_RSRE`
+(
+    `ID`        INT                                                           NOT NULL AUTO_INCREMENT COMMENT '唯一序号',
+    `NAME`      VARCHAR(50) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI  NOT NULL COMMENT '资源名',
+    `URL`       VARCHAR(255) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI NOT NULL COMMENT 'url',
+    `REQT_METD` VARCHAR(10) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI  NOT NULL COMMENT '请求方法',
+    `PARN_ID`   INT DEFAULT -1                                                NOT NULL COMMENT '父id，无则 -1',
+    `IS_ANON`   TINYINT                                                       NOT NULL COMMENT '是否匿名',
+    `CRT_DATE`  INT                                                           NOT NULL COMMENT '创建日期',
+    `CRT_TIME`  INT                                                           NOT NULL COMMENT '创建时间',
+    `UPD_DATE`  INT                                                           NOT NULL COMMENT '修改日期',
+    `UPD_TIME`  INT                                                           NOT NULL COMMENT '修改时间',
+    `UPD_PRSN`  INT                                                           NOT NULL COMMENT '修改人',
+    PRIMARY KEY (`ID`) USING BTREE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1000
+  CHARACTER SET = UTF8MB4
+  COLLATE UTF8MB4_0900_AI_CI COMMENT '系统资源表'
+  ROW_FORMAT = DYNAMIC;
+
+-- --------------------------------------------------------------------------
+-- table structure for sys_menu_rsre
+-- --------------------------------------------------------------------------
+DROP TABLE IF EXISTS `SYS_MENU_RSRE`;
+CREATE TABLE `SYS_MENU_RSRE`
+(
+    `MENU_ID` INT NOT NULL COMMENT '菜单序号',
+    `RSRE_ID` INT NOT NULL COMMENT '资源序号',
+    PRIMARY KEY (`MENU_ID`, `RSRE_ID`)
+) ENGINE = InnoDB
+  CHARACTER SET = UTF8MB4
+  COLLATE UTF8MB4_0900_AI_CI COMMENT '系统菜单资源表'
+  ROW_FORMAT = DYNAMIC;
 
 -- --------------------------------------------------------------------------
 -- table structure for prsn_info
