@@ -1,9 +1,9 @@
 package com.azwcl.oa.infrastructure.client;
 
+import com.azwcl.oa.infrastructure.config.MailConfig;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.mail.Authenticator;
@@ -28,21 +28,21 @@ import java.util.Properties;
 @Setter
 @ToString
 public class EmailClient {
+
     private final MimeMessage message;
 
-    public EmailClient(@Value("${mail.from}") String from, @Value("${mail.host}") String host,
-                       @Value("${mail.username}") String username, @Value("${mail.password}") String password) throws MessagingException, UnsupportedEncodingException {
+    public EmailClient(MailConfig mailConfig) throws MessagingException, UnsupportedEncodingException {
         Properties properties = System.getProperties();
-        properties.setProperty("mail.smtp.host", host);
+        properties.setProperty("mail.smtp.host", mailConfig.getHost());
         properties.setProperty("mail.smtp.auth", "true");
         Session session = Session.getDefaultInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
+                return new PasswordAuthentication(mailConfig.getUsername(), mailConfig.getPassword());
             }
         });
         this.message = new MimeMessage(session);
-        this.message.setFrom(new InternetAddress(username, from));
+        this.message.setFrom(new InternetAddress(mailConfig.getUsername(), mailConfig.getFrom()));
     }
 
     /**

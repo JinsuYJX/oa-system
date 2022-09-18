@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.util.Objects;
 
 /**
- * todo
+ * 文件系统模式
  *
  * @author az
  * @date 2022/09/17
