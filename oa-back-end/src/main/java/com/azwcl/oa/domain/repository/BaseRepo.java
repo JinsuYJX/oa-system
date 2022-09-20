@@ -91,4 +91,13 @@ public interface BaseRepo<T> {
     default Collection<T> findByIds(Collection<Number> ids) {
         return Collections.emptyList();
     }
+
+    /**
+     * 查询所有
+     *
+     * @return 返回所有
+     */
+    default Collection<T> findAll() {
+        return Collections.emptyList();
+    }
 }

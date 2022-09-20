@@ -55,7 +55,7 @@ public class ImageVerificationCodeService {
         } catch (IOException e) {
             throw new AssertionException(200000, messageProperties.getMessage(200000));
         }
-        String image = "data:image/png;base64," + Arrays.toString(Base64Utils.encode(fastByteArrayOutputStream.toByteArray()));
+        String image = "data:image/png;base64," + new String(Base64Utils.encode(fastByteArrayOutputStream.toByteArray()));
 
         // 构造
         ImageVerificationCodeDO codeDO = new ImageVerificationCodeDO(uid, code, image);

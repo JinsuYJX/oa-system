@@ -28,13 +28,18 @@ CREATE TABLE `system_role`
     `update_date`   INT                                                           NOT NULL COMMENT '修改日期',
     `update_time`   INT                                                           NOT NULL COMMENT '修改时间',
     `update_person` INT                                                           NOT NULL COMMENT '修改人',
-    `remark`        VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '备注',
+    `remark`        VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '备注',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1000
   CHARACTER SET = utf8mb4
   COLLATE utf8mb4_0900_ai_ci COMMENT '系统角色表'
   ROW_FORMAT = DYNAMIC;
+
+-- --------------------------------------------------------------------------
+-- records of system_role
+-- --------------------------------------------------------------------------
+INSERT INTO system_role (`id`, `name`, `describe`, `create_date`, `create_time`, `update_date`, `update_time`, `update_person`, `remark`) VALUES ('100', '超级管理员', '超级管理员', '20220920', '2000', '20220920', '2000', '1000000', '无');
 
 -- --------------------------------------------------------------------------
 -- table structure for system_menu
