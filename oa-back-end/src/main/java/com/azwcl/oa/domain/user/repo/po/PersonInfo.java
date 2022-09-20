@@ -17,95 +17,95 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@TableName("PRSN_INFO")
-public class PersonInfoPO {
+@TableName("person_info")
+public class PersonInfo {
     /**
      * id
      */
-    @TableId("ID")
+    @TableId("id")
     private Integer id;
 
     /**
      * 姓名
      */
-    @TableField("NAME")
+    @TableField("name")
     private String name;
 
     /**
      * 昵称
      */
-    @TableField("NINA")
+    @TableField("nickname")
     private String nickname;
 
     /**
      * 密码
      */
-    @TableField("PWD")
+    @TableField("password")
     private String password;
 
     /**
      * 邮箱
      */
-    @TableField("MAIL")
+    @TableField("email")
     private String email;
 
     /**
      * 手机号
      */
-    @TableField("PHOE")
+    @TableField("phone")
     private String phone;
 
     /**
      * 性别
      */
-    @TableField("SEX")
+    @TableField("sex")
     private String sex;
 
     /**
      * 头像
      */
-    @TableField("AVAR")
+    @TableField("avatar")
     private String avatar;
 
     /**
      * 创建日期
      */
-    @TableField("CRT_DATE")
+    @TableField("create_date")
     private Integer createDate;
 
     /**
      * 创建时间
      */
-    @TableField("CRT_TIME")
+    @TableField("create_time")
     private Integer createTime;
 
     /**
      * 修改日期
      */
-    @TableField("UPD_DATE")
+    @TableField("update_date")
     private Integer updateDate;
 
     /**
      * 修改时间
      */
-    @TableField("UPD_TIME")
+    @TableField("update_time")
     private Integer updateTime;
 
     /**
      * 修改人员
      */
-    @TableField("UPD_PRSN")
+    @TableField("update_person")
     private Integer updatePerson;
 
     /**
      * 加入日期
      */
-    @TableField("JOIN_DATE")
+    @TableField("join_date")
     private Integer joinDate;
 
     /**
      * 状态
      */
-    @TableField("STAT")
+    @TableField("status")
     private Integer status;
 }

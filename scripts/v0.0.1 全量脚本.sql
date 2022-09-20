@@ -1,153 +1,158 @@
 -- --------------------------------------------------------------------------
--- table structure for sys_para
+-- table structure for system_parameter
 -- --------------------------------------------------------------------------
-DROP TABLE IF EXISTS `SYS_PARA`;
-CREATE TABLE `SYS_PARA`
+DROP TABLE IF EXISTS `system_parameter`;
+CREATE TABLE `system_parameter`
 (
-    `ID`        INT                                                           NOT NULL AUTO_INCREMENT COMMENT '唯一序号',
-    `PARA_VAL`  VARCHAR(255) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI NOT NULL COMMENT '参数值',
-    `PARA_DESC` VARCHAR(255) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI NOT NULL COMMENT '参数描述',
-    PRIMARY KEY (`ID`) USING BTREE
+    `id`       INT                                                           NOT NULL AUTO_INCREMENT COMMENT '唯一序号',
+    `value`    VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '参数值',
+    `describe` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '参数描述',
+    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1000
-  CHARACTER SET = UTF8MB4
-  COLLATE UTF8MB4_0900_AI_CI COMMENT '系统参数表'
+  CHARACTER SET = utf8mb4
+  COLLATE utf8mb4_0900_ai_ci COMMENT '系统参数表'
   ROW_FORMAT = DYNAMIC;
 
 -- --------------------------------------------------------------------------
--- table structure for sys_role
+-- table structure for system_role
 -- --------------------------------------------------------------------------
-DROP TABLE IF EXISTS `SYS_ROLE`;
-CREATE TABLE `SYS_ROLE`
+DROP TABLE IF EXISTS `system_role`;
+CREATE TABLE `system_role`
 (
-    `ID`       INT                                                           NOT NULL AUTO_INCREMENT COMMENT '唯一序号',
-    `NAME`     VARCHAR(50) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI  NOT NULL COMMENT '角色名',
-    `DESC`     VARCHAR(255) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI NULL COMMENT '角色描述',
-    `CRT_DATE` INT                                                           NOT NULL COMMENT '创建日期',
-    `CRT_TIME` INT                                                           NOT NULL COMMENT '创建时间',
-    `UPD_DATE` INT                                                           NOT NULL COMMENT '修改日期',
-    `UPD_TIME` INT                                                           NOT NULL COMMENT '修改时间',
-    `UPD_PRSN` INT                                                           NOT NULL COMMENT '修改人',
-    `REMK`     VARCHAR(255) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI NOT NULL COMMENT '备注',
-    PRIMARY KEY (`ID`) USING BTREE
+    `id`            INT                                                           NOT NULL AUTO_INCREMENT COMMENT '唯一序号',
+    `name`          VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL COMMENT '角色名',
+    `describe`      VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '角色描述',
+    `create_date`   INT                                                           NOT NULL COMMENT '创建日期',
+    `create_time`   INT                                                           NOT NULL COMMENT '创建时间',
+    `update_date`   INT                                                           NOT NULL COMMENT '修改日期',
+    `update_time`   INT                                                           NOT NULL COMMENT '修改时间',
+    `update_person` INT                                                           NOT NULL COMMENT '修改人',
+    `remark`        VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '备注',
+    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1000
-  CHARACTER SET = UTF8MB4
-  COLLATE UTF8MB4_0900_AI_CI COMMENT '系统角色表'
+  CHARACTER SET = utf8mb4
+  COLLATE utf8mb4_0900_ai_ci COMMENT '系统角色表'
   ROW_FORMAT = DYNAMIC;
 
 -- --------------------------------------------------------------------------
--- table structure for sys_menu
+-- table structure for system_menu
 -- --------------------------------------------------------------------------
-DROP TABLE IF EXISTS `SYS_MENU`;
-CREATE TABLE `SYS_MENU`
+DROP TABLE IF EXISTS `system_menu`;
+CREATE TABLE `system_menu`
 (
-    `ID`        INT                                                                       NOT NULL AUTO_INCREMENT COMMENT '唯一序号',
-    `NAME`      VARCHAR(50) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI              NOT NULL COMMENT '菜单名称',
-    `PATH`      VARCHAR(255) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI             NOT NULL COMMENT '前端的路径',
-    `COPT` VARCHAR(255) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI             NOT NULL COMMENT '组件',
-    `ICON`      VARCHAR(255) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI DEFAULT '#' NOT NULL COMMENT '菜单图标',
-    `CRT_DATE`  INT                                                                       NOT NULL COMMENT '创建日期',
-    `CRT_TIME`  INT                                                                       NOT NULL COMMENT '创建时间',
-    `PARN_ID`   INT                                                           DEFAULT -1  NOT NULL COMMENT '父id，无则 -1',
-    `STAT`      CHAR(1) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI      DEFAULT 0   NOT NULL COMMENT '菜单状态',
-    PRIMARY KEY (`ID`) USING BTREE
+    `id`          INT                                                                       NOT NULL AUTO_INCREMENT COMMENT '唯一序号',
+    `name`        VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci              NOT NULL COMMENT '菜单名称',
+    `path`        VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci             NOT NULL COMMENT '前端的路径',
+    `component`   VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci             NOT NULL COMMENT '组件',
+    `icon`        VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '#' NOT NULL COMMENT '菜单图标',
+    `create_date` INT                                                                       NOT NULL COMMENT '创建日期',
+    `create_time` INT                                                                       NOT NULL COMMENT '创建时间',
+    `parent_id`   INT                                                           DEFAULT -1  NOT NULL COMMENT '父id，无则 -1',
+    `status`      CHAR(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci      DEFAULT 0   NOT NULL COMMENT '菜单状态',
+    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1000
-  CHARACTER SET = UTF8MB4
-  COLLATE UTF8MB4_0900_AI_CI COMMENT '系统菜单表'
+  CHARACTER SET = utf8mb4
+  COLLATE utf8mb4_0900_ai_ci COMMENT '系统菜单表'
   ROW_FORMAT = DYNAMIC;
 
 -- --------------------------------------------------------------------------
--- table structure for sys_rsre
+-- table structure for system_resource
 -- --------------------------------------------------------------------------
-DROP TABLE IF EXISTS `SYS_RSRE`;
-CREATE TABLE `SYS_RSRE`
+DROP TABLE IF EXISTS `system_resource`;
+CREATE TABLE `system_resource`
 (
-    `ID`        INT                                                           NOT NULL AUTO_INCREMENT COMMENT '唯一序号',
-    `NAME`      VARCHAR(50) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI  NOT NULL COMMENT '资源名',
-    `URL`       VARCHAR(255) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI NOT NULL COMMENT 'url',
-    `REQT_METD` VARCHAR(10) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI  NOT NULL COMMENT '请求方法',
-    `PARN_ID`   INT DEFAULT -1                                                NOT NULL COMMENT '父id，无则 -1',
-    `IS_ANON`   TINYINT                                                       NOT NULL COMMENT '是否匿名',
-    `CRT_DATE`  INT                                                           NOT NULL COMMENT '创建日期',
-    `CRT_TIME`  INT                                                           NOT NULL COMMENT '创建时间',
-    `UPD_DATE`  INT                                                           NOT NULL COMMENT '修改日期',
-    `UPD_TIME`  INT                                                           NOT NULL COMMENT '修改时间',
-    `UPD_PRSN`  INT                                                           NOT NULL COMMENT '修改人',
-    PRIMARY KEY (`ID`) USING BTREE
+    `id`             INT                                                           NOT NULL AUTO_INCREMENT COMMENT '唯一序号',
+    `name`           VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL COMMENT '资源名',
+    `url`            VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'url',
+    `request_method` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL COMMENT '请求方法',
+    `parent_id`      INT DEFAULT -1                                                NOT NULL COMMENT '父id，无则 -1',
+    `is_anonymous`   TINYINT                                                       NOT NULL COMMENT '是否匿名',
+    `create_date`    INT                                                           NOT NULL COMMENT '创建日期',
+    `create_time`    INT                                                           NOT NULL COMMENT '创建时间',
+    `update_date`    INT                                                           NOT NULL COMMENT '修改日期',
+    `update_time`    INT                                                           NOT NULL COMMENT '修改时间',
+    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1000
-  CHARACTER SET = UTF8MB4
-  COLLATE UTF8MB4_0900_AI_CI COMMENT '系统资源表'
+  CHARACTER SET = utf8mb4
+  COLLATE utf8mb4_0900_ai_ci COMMENT '系统资源表'
   ROW_FORMAT = DYNAMIC;
 
 -- --------------------------------------------------------------------------
--- table structure for sys_menu_rsre
+-- records of system_resource
 -- --------------------------------------------------------------------------
-DROP TABLE IF EXISTS `SYS_MENU_RSRE`;
-CREATE TABLE `SYS_MENU_RSRE`
+INSERT INTO `system_resource` (`id`, `name`, `url`, `request_method`, `parent_id`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`) VALUES (100, '登录图片验证码获取', '/login/image-code', 'GET', '-1', '1', '20220920', '2000', '20220920', '2000');
+
+
+-- --------------------------------------------------------------------------
+-- table structure for system_menu_resource
+-- --------------------------------------------------------------------------
+DROP TABLE IF EXISTS `system_menu_resource`;
+CREATE TABLE `system_menu_resource`
 (
-    `MENU_ID` INT NOT NULL COMMENT '菜单序号',
-    `RSRE_ID` INT NOT NULL COMMENT '资源序号',
-    PRIMARY KEY (`MENU_ID`, `RSRE_ID`)
+    `menu_id`     INT NOT NULL COMMENT '菜单序号',
+    `resource_id` INT NOT NULL COMMENT '资源序号',
+    PRIMARY KEY (`menu_id`, `resource_id`)
 ) ENGINE = InnoDB
-  CHARACTER SET = UTF8MB4
-  COLLATE UTF8MB4_0900_AI_CI COMMENT '系统菜单资源表'
+  CHARACTER SET = utf8mb4
+  COLLATE utf8mb4_0900_ai_ci COMMENT '系统菜单资源表'
   ROW_FORMAT = DYNAMIC;
 
 -- --------------------------------------------------------------------------
--- table structure for prsn_info
+-- table structure for person_info
 -- --------------------------------------------------------------------------
-DROP TABLE IF EXISTS `PRSN_INFO`;
-CREATE TABLE `PRSN_INFO`
+DROP TABLE IF EXISTS `person_info`;
+CREATE TABLE `person_info`
 (
-    `ID`        INT                                                                                 NOT NULL AUTO_INCREMENT COMMENT '唯一序号',
-    `NAME`      VARCHAR(50) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI                        NOT NULL COMMENT '姓名',
-    `NINA`      VARCHAR(255) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI                       NULL COMMENT '昵称',
-    `PWD`       CHAR(32) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI                           NOT NULL COMMENT '密码',
-    `MAIL`      VARCHAR(255) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI                       NULL COMMENT '邮箱',
-    `PHOE`      CHAR(11) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI                           NULL COMMENT '手机号',
-    `SEX`       CHAR(1) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI      DEFAULT '0'           NOT NULL COMMENT '性别',
-    `AVAR`      VARCHAR(255) CHARACTER SET UTF8MB4 COLLATE UTF8MB4_0900_AI_CI DEFAULT 'default.png' NOT NULL COMMENT '头像',
-    `CRT_DATE`  INT                                                                                 NOT NULL COMMENT '创建日期',
-    `CRT_TIME`  INT                                                                                 NOT NULL COMMENT '创建时间',
-    `UPD_DATE`  INT                                                                                 NOT NULL COMMENT '修改日期',
-    `UPD_TIME`  INT                                                                                 NOT NULL COMMENT '修改时间',
-    `UPD_PRSN`  INT                                                                                 NOT NULL COMMENT '修改人',
-    `JOIN_DATE` INT                                                                                 NOT NULL COMMENT '加入日期',
-    `STAT`      CHAR(1)                                                       DEFAULT '0'           NOT NULL COMMENT '状态',
-    PRIMARY KEY (`ID`) USING BTREE
+    `id`            INT                                                                                 NOT NULL AUTO_INCREMENT COMMENT '唯一序号',
+    `name`          VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci                        NOT NULL COMMENT '姓名',
+    `nickname`      VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci                       NULL COMMENT '昵称',
+    `password`      CHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci                           NOT NULL COMMENT '密码',
+    `email`         VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci                       NULL COMMENT '邮箱',
+    `phone`         CHAR(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci                           NULL COMMENT '手机号',
+    `sex`           CHAR(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci      DEFAULT '0'           NOT NULL COMMENT '性别',
+    `avatar`        VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'default.png' NOT NULL COMMENT '头像',
+    `create_date`   INT                                                                                 NOT NULL COMMENT '创建日期',
+    `create_time`   INT                                                                                 NOT NULL COMMENT '创建时间',
+    `update_date`   INT                                                                                 NOT NULL COMMENT '修改日期',
+    `update_time`   INT                                                                                 NOT NULL COMMENT '修改时间',
+    `update_person` INT                                                                                 NOT NULL COMMENT '修改人',
+    `join_date`     INT                                                                                 NOT NULL COMMENT '加入日期',
+    `status`        CHAR(1)                                                       DEFAULT '0'           NOT NULL COMMENT '状态',
+    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1000
-  CHARACTER SET = UTF8MB4
-  COLLATE UTF8MB4_0900_AI_CI COMMENT '人员信息表'
+  CHARACTER SET = utf8mb4
+  COLLATE utf8mb4_0900_ai_ci COMMENT '人员信息表'
   ROW_FORMAT = DYNAMIC;
 
 -- --------------------------------------------------------------------------
--- table structure for prsn_role
+-- table structure for person_role
 -- --------------------------------------------------------------------------
-DROP TABLE IF EXISTS `PRSN_ROLE`;
-CREATE TABLE `PRSN_ROLE`
+DROP TABLE IF EXISTS `person_role`;
+CREATE TABLE `person_role`
 (
-    `PRSN_ID` INT NOT NULL COMMENT '用户序号',
-    `ROLE_ID` INT NOT NULL COMMENT '角色序号',
-    PRIMARY KEY (`PRSN_ID`, `ROLE_ID`)
+    `person_id` INT NOT NULL COMMENT '用户序号',
+    `role_id`   INT NOT NULL COMMENT '角色序号',
+    PRIMARY KEY (`person_id`, `role_id`)
 ) ENGINE = InnoDB
-  CHARACTER SET = UTF8MB4
-  COLLATE UTF8MB4_0900_AI_CI COMMENT '人员角色表'
+  CHARACTER SET = utf8mb4
+  COLLATE utf8mb4_0900_ai_ci COMMENT '人员角色表'
   ROW_FORMAT = DYNAMIC;
 
 -- --------------------------------------------------------------------------
--- table structure for prsn_role_menu
+-- table structure for person_role_menu
 -- --------------------------------------------------------------------------
-DROP TABLE IF EXISTS `PRSN_ROLE_MENU`;
-CREATE TABLE `PRSN_ROLE_MENU`
+DROP TABLE IF EXISTS `person_role_menu`;
+CREATE TABLE `person_role_menu`
 (
-    `ROLE_ID` INT NOT NULL COMMENT '角色序号',
-    `MENU_ID` INT NOT NULL COMMENT '菜单序号',
-    PRIMARY KEY (`ROLE_ID`, `MENU_ID`)
+    `role_id` INT NOT NULL COMMENT '角色序号',
+    `menu_id` INT NOT NULL COMMENT '菜单序号',
+    PRIMARY KEY (`role_id`, `menu_id`)
 ) ENGINE = InnoDB
-  CHARACTER SET = UTF8MB4
-  COLLATE UTF8MB4_0900_AI_CI COMMENT '人员角色菜单表'
+  CHARACTER SET = utf8mb4
+  COLLATE utf8mb4_0900_ai_ci COMMENT '人员角色菜单表'
   ROW_FORMAT = DYNAMIC;

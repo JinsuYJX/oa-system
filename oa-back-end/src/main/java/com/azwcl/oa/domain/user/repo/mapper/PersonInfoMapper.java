@@ -1,6 +1,6 @@
 package com.azwcl.oa.domain.user.repo.mapper;
 
-import com.azwcl.oa.domain.user.repo.po.PersonInfoPO;
+import com.azwcl.oa.domain.user.repo.po.PersonInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,5 +12,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 
 @Mapper
-public interface PersonInfoMapper extends BaseMapper<PersonInfoPO> {
+public interface PersonInfoMapper extends BaseMapper<PersonInfo> {
 }

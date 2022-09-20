@@ -1,4 +1,4 @@
-package com.azwcl.oa.domain.user.repo;
+package com.azwcl.oa.domain.repository;
 
 import java.util.Collection;
 import java.util.Collections;
