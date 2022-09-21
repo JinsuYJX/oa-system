@@ -4,6 +4,8 @@ import com.azwcl.oa.domain.code.converter.ToImageVerificationCodeConverter;
 import com.azwcl.oa.domain.code.entity.domainobject.ImageVerificationCodeDO;
 import com.azwcl.oa.domain.code.entity.enums.VerificationCodeModel;
 import com.azwcl.oa.domain.code.repo.ImageVerificationCodeRepo;
+import com.azwcl.oa.domain.code.repo.po.ImageVerificationCode;
+import com.azwcl.oa.infrastructure.common.enums.ExpirationTime;
 import com.azwcl.oa.infrastructure.common.enums.StringRandomModel;
 import com.azwcl.oa.infrastructure.common.exception.AssertionException;
 import com.azwcl.oa.infrastructure.utils.MessageProperties;
@@ -18,6 +20,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * 图片验证码 service
@@ -64,5 +67,29 @@ public class ImageVerificationCodeService {
         imageVerificationCodeRepo.save(ToImageVerificationCodeConverter.CONVERTER.toImageVerificationCode(codeDO, model));
 
         return codeDO;
+    }
+
+    /**
+     * 检查图片验证码
+     *
+     * @param codeDO 验证码
+     * @return 验证码处理结果
+     */
+    public boolean checkImageVerificationCode(ImageVerificationCodeDO codeDO) {
+        ImageVerificationCode cacheCode = imageVerificationCodeRepo.findByUid(codeDO.getUid());
+        if (cacheCode == null) {
+            throw new AssertionException(400, 200001, messageProperties.getMessage(200001));
+        }
+
+        if (!Objects.equals(cacheCode.getCode().toUpperCase(), codeDO.getCode().toUpperCase())) {
+            throw new AssertionException(400, 200002, messageProperties.getMessage(200002));
+        }
+
+        if(codeDO.getTime() - cacheCode.getTime() < ExpirationTime.VERIFICATION_CODE.getMillisecond()) {
+            return true;
+        }
+        else {
+            throw new AssertionException(400, 200001, messageProperties.getMessage(200001));
+        }
     }
 }

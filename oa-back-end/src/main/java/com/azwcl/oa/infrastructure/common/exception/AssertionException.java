@@ -28,6 +28,13 @@ public class AssertionException extends RuntimeException {
      */
     private final String message;
 
+    /**
+     * 异常
+     *
+     * @param httpStatus http 状态码
+     * @param code       异常 code
+     * @param message    异常信息
+     */
     public AssertionException(Integer httpStatus, Integer code, String message) {
         super(message);
         this.httpStatus = httpStatus;
@@ -35,6 +42,12 @@ public class AssertionException extends RuntimeException {
         this.message = message;
     }
 
+    /**
+     * 异常 默认返回 500 http 状态码
+     *
+     * @param code    异常 code
+     * @param message 异常信息
+     */
     public AssertionException(Integer code, String message) {
         super(message);
         this.code = code;

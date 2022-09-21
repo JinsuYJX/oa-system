@@ -15,8 +15,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
 public class ImageVerificationCodeDO {
 
     /**
@@ -38,6 +36,10 @@ public class ImageVerificationCodeDO {
      * 验证码图片
      */
     private String image;
+
+    public ImageVerificationCodeDO() {
+        this.time = System.currentTimeMillis();
+    }
 
     public ImageVerificationCodeDO(String uid, String code, String image) {
         this.uid = uid;
