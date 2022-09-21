@@ -20,7 +20,7 @@ public class StringUtil {
      * @return 加密的值
      */
     public static String md5(String val) {
-        return DigestUtils.md5DigestAsHex(Objects.requireNonNullElse(val, "null").getBytes());
+        return DigestUtils.md5DigestAsHex(val.getBytes());
     }
 
     /**

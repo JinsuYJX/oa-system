@@ -1,9 +1,16 @@
 package com.azwcl.oa.infrastructure.config;
 
+import com.azwcl.oa.application.security.service.FilterInvocationSecurityMetadataSourceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.DefaultSecurityFilterChain;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 /**
  * spring security 配置类
@@ -15,24 +22,38 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SpringSecurityConfig {
 
+    /**
+     * 密码加密
+     *
+     * @return 加密方式
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        return http
-//                // 关闭 csrf
-//                .csrf().disable()
-//                // 不通过 session 获取 SecurityContext
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/user/login").anonymous()
-//                .anyRequest().authenticated().and().build();
-//    }
+    @Bean
+    public FilterInvocationSecurityMetadataSource securityMetadataSource() {
+        return new FilterInvocationSecurityMetadataSourceImpl();
+    }
 
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        return http
+
+                .authorizeRequests()
+                .anyRequest().permitAll()
+                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+                    @Override
+                    public <O extends FilterSecurityInterceptor> O postProcess(O fsi) {
+                        fsi.setSecurityMetadataSource(securityMetadataSource());
+                        return fsi;
+                    }
+                })
+                .and().build();
+
+    }
 
 
 }

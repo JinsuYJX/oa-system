@@ -1,4 +1,4 @@
-package com.azwcl.oa.domain.user.repo;
+package com.azwcl.oa.domain.repository;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -89,6 +89,15 @@ public interface BaseRepo<T> {
      * @return 结果集
      */
     default Collection<T> findByIds(Collection<Number> ids) {
+        return Collections.emptyList();
+    }
+
+    /**
+     * 查询所有
+     *
+     * @return 返回所有
+     */
+    default Collection<T> findAll() {
         return Collections.emptyList();
     }
 }
