@@ -40,10 +40,7 @@ public class SpringSecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        return http
-
-                .authorizeRequests()
-                .anyRequest().permitAll()
+        return http.authorizeRequests()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O fsi) {
@@ -51,6 +48,8 @@ public class SpringSecurityConfig {
                         return fsi;
                     }
                 })
+                .anyRequest().permitAll()
+                .and().csrf().disable().exceptionHandling()
                 .and().build();
 
     }

@@ -2,9 +2,11 @@ package com.azwcl.oa.domain.code.repo.redis;
 
 import com.azwcl.oa.domain.code.repo.ImageVerificationCodeRepo;
 import com.azwcl.oa.domain.code.repo.po.ImageVerificationCode;
+import com.azwcl.oa.infrastructure.utils.JsonSerialize;
 import com.azwcl.oa.infrastructure.utils.RedisCache;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Repository;
 
 import java.util.Objects;
@@ -20,13 +22,14 @@ import java.util.Objects;
 public class ImageVerificationCodeRepoRedisImpl implements ImageVerificationCodeRepo {
     private final RedisCache redisCache;
 
-    private final ObjectMapper objectMapper;
+    private final JsonSerialize jsonSerialize;
 
+    private final ObjectMapper objectMapper;
     private final String tableName = "ImageVerificationCode";
 
     @Override
     public void save(ImageVerificationCode imageVerificationCode) {
-        redisCache.setHashValue(tableName, imageVerificationCode.getUid(), imageVerificationCode);
+        redisCache.setHashValue(tableName, imageVerificationCode.getUid(), jsonSerialize.getJson(imageVerificationCode));
     }
 
     /**
@@ -40,13 +43,8 @@ public class ImageVerificationCodeRepoRedisImpl implements ImageVerificationCode
     }
 
     @Override
+    @SneakyThrows
     public ImageVerificationCode findByUid(String uid) {
-        Object hashValue = redisCache.getHashValue(tableName, uid);
-        if(Objects.isNull(hashValue)) {
-            return null;
-        }
-        else {
-            return (ImageVerificationCode) hashValue;
-        }
+        return redisCache.getHashValue(tableName, uid, ImageVerificationCode.class);
     }
 }

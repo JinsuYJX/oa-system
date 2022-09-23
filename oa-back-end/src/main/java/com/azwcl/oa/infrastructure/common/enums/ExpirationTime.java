@@ -17,6 +17,10 @@ public enum ExpirationTime {
      */
     VERIFICATION_CODE(300L);
 
+    /**
+     * 分钟
+     */
+    private final Long minutes;
 
     /**
      * 秒
@@ -29,6 +33,7 @@ public enum ExpirationTime {
     private final Long millisecond;
 
     ExpirationTime(Long second) {
+        this.minutes = second / 60;
         this.second = second;
         this.millisecond = second * 1000;
     }

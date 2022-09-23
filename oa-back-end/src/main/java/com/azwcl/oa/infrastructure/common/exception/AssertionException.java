@@ -1,5 +1,6 @@
 package com.azwcl.oa.infrastructure.common.exception;
 
+import com.azwcl.oa.infrastructure.common.enums.HttpStatus;
 import lombok.Getter;
 
 /**
@@ -31,13 +32,13 @@ public class AssertionException extends RuntimeException {
     /**
      * 异常
      *
-     * @param httpStatus http 状态码
+     * @param status     http 状态码
      * @param code       异常 code
      * @param message    异常信息
      */
-    public AssertionException(Integer httpStatus, Integer code, String message) {
+    public AssertionException(HttpStatus status, Integer code, String message) {
         super(message);
-        this.httpStatus = httpStatus;
+        this.httpStatus = status.getHttpStatus();
         this.code = code;
         this.message = message;
     }
@@ -53,5 +54,11 @@ public class AssertionException extends RuntimeException {
         this.code = code;
         this.httpStatus = 500;
         this.message = message;
+    }
+
+    @Override
+    public synchronized Throwable fillInStackTrace() {
+        // 重写方法，禁止抓堆栈信息；提高效率
+        return this;
     }
 }

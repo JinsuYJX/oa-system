@@ -1,11 +1,16 @@
 package com.azwcl.oa.infrastructure.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * redis cache 操作工具
@@ -17,8 +22,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class RedisCache {
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
 
+    private final JsonSerialize jsonSerialize;
 
     /**
      * 设置 hash 数据
@@ -38,8 +44,14 @@ public class RedisCache {
      * @param hKey hash 键
      * @return hash 值
      */
-    public Object getHashValue(String key, Object hKey) {
-        return redisTemplate.opsForHash().get(key, hKey);
+    public  <T> T getHashValue(String key, Object hKey, Class<T> clazz) {
+        Object o = redisTemplate.opsForHash().get(key, hKey);
+
+        if(Objects.isNull(o)) {
+            return null;
+        }
+
+        return jsonSerialize.readValue(o, clazz);
     }
 
     /**
@@ -49,8 +61,13 @@ public class RedisCache {
      * @param hKey hash 键
      * @return hash 值
      */
-    public List<Object> getHashValue(String key, Collection<Object> hKey) {
-        return redisTemplate.opsForHash().multiGet(key, hKey);
+    public <T> List<T> getHashValue(String key, Collection<Object> hKey, Class<T> clazz) {
+        List<Object> objects = redisTemplate.opsForHash().multiGet(key, hKey);
+
+        return objects
+                .stream()
+                .map(obj -> jsonSerialize.readValue(obj, clazz))
+                .collect(Collectors.toList());
     }
 
     /**

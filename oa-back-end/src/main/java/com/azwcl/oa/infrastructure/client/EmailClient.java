@@ -3,7 +3,9 @@ package com.azwcl.oa.infrastructure.client;
 import com.azwcl.oa.infrastructure.config.MailConfig;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import lombok.ToString;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.mail.Authenticator;
@@ -52,7 +54,9 @@ public class EmailClient {
      * @param subject 主题
      * @param message 收件信息
      */
-    public void sendSimpleMail(String to, String subject, String message) throws MessagingException {
+    @Async
+    @SneakyThrows
+    public void sendSimpleMail(String to, String subject, String message) {
         this.message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
         this.message.setSubject(subject);
         this.message.setText(message);

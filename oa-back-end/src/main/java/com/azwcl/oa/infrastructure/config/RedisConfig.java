@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -22,20 +23,17 @@ public class RedisConfig {
     private final ObjectMapper objectMapper;
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
+    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
+        StringRedisTemplate template = new StringRedisTemplate();
 
         template.setConnectionFactory(factory);
-
-        GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(objectMapper);
+        // 配置 字符串序列化即可；
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
 
-        // 使用 jackson 序列化反序列化 key value
         template.setKeySerializer(stringRedisSerializer);
-        template.setValueSerializer(serializer);
-        // 使用 jackson 序列化反序列化 hash key value
+        template.setValueSerializer(stringRedisSerializer);
         template.setHashKeySerializer(stringRedisSerializer);
-        template.setHashValueSerializer(serializer);
+        template.setHashKeySerializer(stringRedisSerializer);
 
         template.afterPropertiesSet();
         return template;

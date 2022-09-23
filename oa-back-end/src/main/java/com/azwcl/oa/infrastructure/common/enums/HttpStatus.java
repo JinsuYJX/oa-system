@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 
 @Getter
-public enum ResponseStatusCode {
+public enum HttpStatus {
 
     /**
      * 200
@@ -52,7 +52,7 @@ public enum ResponseStatusCode {
      */
     private final String message;
 
-    ResponseStatusCode(Integer httpStatus, String message) {
+    HttpStatus(Integer httpStatus, String message) {
         this.httpStatus = httpStatus;
         this.message = message;
     }

@@ -75,4 +75,17 @@ public class StringUtil {
     public static String uuid() {
         return UUID.randomUUID().toString().replace("-", "").toLowerCase();
     }
+
+
+    /**
+     * 判断字符串是否是邮箱
+     *
+     * @param val 值
+     * @return true-是,false-不是
+     */
+    public static boolean isEmail(String val) {
+        String expr = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})$";
+
+        return val.matches(expr);
+    }
 }
