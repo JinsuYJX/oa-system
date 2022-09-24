@@ -25,6 +25,7 @@ CREATE TABLE `system_role`
     `describe`      VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '角色描述',
     `create_date`   INT                                                           NOT NULL COMMENT '创建日期',
     `create_time`   INT                                                           NOT NULL COMMENT '创建时间',
+    `create_person` INT                                                           NOT NULL COMMENT '创建用户',
     `update_date`   INT                                                           NOT NULL COMMENT '修改日期',
     `update_time`   INT                                                           NOT NULL COMMENT '修改时间',
     `update_person` INT                                                           NOT NULL COMMENT '修改人',
@@ -39,7 +40,7 @@ CREATE TABLE `system_role`
 -- --------------------------------------------------------------------------
 -- records of system_role
 -- --------------------------------------------------------------------------
-INSERT INTO system_role (`id`, `name`, `describe`, `create_date`, `create_time`, `update_date`, `update_time`, `update_person`, `remark`) VALUES ('100', '超级管理员', '超级管理员', '20220920', '2000', '20220920', '2000', '1000000', '无');
+INSERT INTO system_role (`id`, `name`, `describe`, `create_date`, `create_time`, `create_person`,`update_date`, `update_time`, `update_person`, `remark`) VALUES ('100', '超级管理员', '超级管理员', '20220920', '2000', '1000000', '20220920', '2000', '1000000', '无');
 
 -- --------------------------------------------------------------------------
 -- table structure for system_menu
@@ -72,8 +73,9 @@ CREATE TABLE `system_resource`
     `id`             INT                                                           NOT NULL AUTO_INCREMENT COMMENT '唯一序号',
     `name`           VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL COMMENT '资源名',
     `url`            VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'url',
+    `menu_id`        VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '菜单序号，无则-1',
+    `identity`       VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL COMMENT '资源标识',
     `request_method` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL COMMENT '请求方法',
-    `parent_id`      INT DEFAULT -1                                                NOT NULL COMMENT '父id，无则 -1',
     `is_anonymous`   TINYINT                                                       NOT NULL COMMENT '是否匿名',
     `create_date`    INT                                                           NOT NULL COMMENT '创建日期',
     `create_time`    INT                                                           NOT NULL COMMENT '创建时间',
@@ -89,8 +91,22 @@ CREATE TABLE `system_resource`
 -- --------------------------------------------------------------------------
 -- records of system_resource
 -- --------------------------------------------------------------------------
-INSERT INTO `system_resource` (`id`, `name`, `url`, `request_method`, `parent_id`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`) VALUES (100, '登录图片验证码获取', '/login/image-code', 'GET', '-1', '1', '20220920', '2000', '20220920', '2000');
+INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `parent_id`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`) VALUES (100, '登录图片验证码获取', '/login/image-code', '-1','login:image-code', 'GET', '-1', '1', '20220920', '2000', '20220920', '2000');
+INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `parent_id`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`) VALUES (101, '登录邮箱验证码', '/login/code', '-1', 'login:code', 'POST', '-1', '1', '20220924', '0729', '20220924', '0729');
 
+-- --------------------------------------------------------------------------
+-- table structure for system_role_resource
+-- --------------------------------------------------------------------------
+DROP TABLE IF EXISTS `system_role_resource`;
+CREATE TABLE `system_role_resource`
+(
+    `role_id`     INT NOT NULL COMMENT '角色序号',
+    `resource_id` INT NOT NULL COMMENT '资源序号',
+    PRIMARY KEY (`role_id`, `resource_id`)
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE utf8mb4_0900_ai_ci COMMENT '系统角色资源表'
+  ROW_FORMAT = DYNAMIC;
 
 -- --------------------------------------------------------------------------
 -- table structure for system_menu_resource
@@ -146,18 +162,4 @@ CREATE TABLE `person_role`
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE utf8mb4_0900_ai_ci COMMENT '人员角色表'
-  ROW_FORMAT = DYNAMIC;
-
--- --------------------------------------------------------------------------
--- table structure for person_role_menu
--- --------------------------------------------------------------------------
-DROP TABLE IF EXISTS `person_role_menu`;
-CREATE TABLE `person_role_menu`
-(
-    `role_id` INT NOT NULL COMMENT '角色序号',
-    `menu_id` INT NOT NULL COMMENT '菜单序号',
-    PRIMARY KEY (`role_id`, `menu_id`)
-) ENGINE = InnoDB
-  CHARACTER SET = utf8mb4
-  COLLATE utf8mb4_0900_ai_ci COMMENT '人员角色菜单表'
   ROW_FORMAT = DYNAMIC;
