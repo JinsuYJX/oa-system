@@ -91,8 +91,8 @@ CREATE TABLE `system_resource`
 -- --------------------------------------------------------------------------
 -- records of system_resource
 -- --------------------------------------------------------------------------
-INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `parent_id`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`) VALUES (100, '登录图片验证码获取', '/login/image-code', '-1','login:image-code', 'GET', '-1', '1', '20220920', '2000', '20220920', '2000');
-INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `parent_id`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`) VALUES (101, '登录邮箱验证码', '/login/code', '-1', 'login:code', 'POST', '-1', '1', '20220924', '0729', '20220924', '0729');
+INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`) VALUES (100, '登录图片验证码获取', '/login/image-code', '-1','login:image-code', 'GET', '1', '20220920', '2000', '20220920', '2000');
+INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`) VALUES (101, '登录邮箱验证码', '/login/code', '-1', 'login:code', 'POST', '1', '20220924', '0729', '20220924', '0729');
 
 -- --------------------------------------------------------------------------
 -- table structure for system_role_resource
@@ -106,20 +106,6 @@ CREATE TABLE `system_role_resource`
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE utf8mb4_0900_ai_ci COMMENT '系统角色资源表'
-  ROW_FORMAT = DYNAMIC;
-
--- --------------------------------------------------------------------------
--- table structure for system_menu_resource
--- --------------------------------------------------------------------------
-DROP TABLE IF EXISTS `system_menu_resource`;
-CREATE TABLE `system_menu_resource`
-(
-    `menu_id`     INT NOT NULL COMMENT '菜单序号',
-    `resource_id` INT NOT NULL COMMENT '资源序号',
-    PRIMARY KEY (`menu_id`, `resource_id`)
-) ENGINE = InnoDB
-  CHARACTER SET = utf8mb4
-  COLLATE utf8mb4_0900_ai_ci COMMENT '系统菜单资源表'
   ROW_FORMAT = DYNAMIC;
 
 -- --------------------------------------------------------------------------
@@ -163,3 +149,22 @@ CREATE TABLE `person_role`
   CHARACTER SET = utf8mb4
   COLLATE utf8mb4_0900_ai_ci COMMENT '人员角色表'
   ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for person_auth
+-- ----------------------------
+DROP TABLE IF EXISTS `person_auth`;
+CREATE TABLE `person_auth`
+(
+    `person_id`   int        NOT NULL COMMENT '用户id',
+    `username`    varchar(255) DEFAULT NULL,
+    `password`    varchar(255) DEFAULT NULL,
+    `login_type`  tinyint(1) NOT NULL COMMENT '登录类型',
+    `create_date` int          DEFAULT NULL COMMENT '日期',
+    `create_time` int          DEFAULT NULL COMMENT '时间',
+    `update_date` int          DEFAULT NULL COMMENT '修改日期',
+    `update_time` int          DEFAULT NULL COMMENT '修改时间',
+    PRIMARY KEY (`person_id`, `login_type`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci COMMENT '人员认证表';

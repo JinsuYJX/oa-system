@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.azwcl.oa.domain.system.repo.mapper.SystemResourceMapper">
+
+    <resultMap id="systemResourceResultMap" type="com.azwcl.oa.domain.system.entity.SystemResourceDO">
+        <id column="id" property="id"/>
+        <result column="url" property="url"/>
+        <result column="request_method" property="requestMethod"/>
+        <result column="is_anonymous" property="isAnonymous"/>
+        <collection property="rolesId" ofType="integer">
+            <constructor>
+                <arg column="role_id"/>
+            </constructor>
+        </collection>
+    </resultMap>
+
+    <select id="listSystemResourceDo" resultMap="systemResourceResultMap">
+        SELECT
+            system_resource.id,
+            system_resource.url,
+            system_resource.request_method,
+            system_resource.is_anonymous,
+            system_role_resource.role_id
+        FROM system_resource
+        LEFT JOIN system_role_resource ON system_resource.id = system_role_resource.resource_id;
+    </select>
+</mapper>
