@@ -1,12 +1,10 @@
 package com.azwcl.oa.infrastructure.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
@@ -19,11 +17,9 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 @RequiredArgsConstructor
 public class RedisConfig {
-    private final ObjectMapper objectMapper;
-
     @Bean
-    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
-        StringRedisTemplate template = new StringRedisTemplate();
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<Object, Object> template = new RedisTemplate<>();
 
         template.setConnectionFactory(factory);
         // 配置 字符串序列化即可；
@@ -32,7 +28,7 @@ public class RedisConfig {
         template.setKeySerializer(stringRedisSerializer);
         template.setValueSerializer(stringRedisSerializer);
         template.setHashKeySerializer(stringRedisSerializer);
-        template.setHashKeySerializer(stringRedisSerializer);
+        template.setHashValueSerializer(stringRedisSerializer);
 
         template.afterPropertiesSet();
         return template;

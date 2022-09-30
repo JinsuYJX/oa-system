@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class RedisCache {
-    private final RedisTemplate<String, String> redisTemplate;
+    private final RedisTemplate<Object, Object> redisTemplate;
 
     private final JsonSerialize jsonSerialize;
 
@@ -31,7 +31,7 @@ public class RedisCache {
      * @param value hash 值
      */
     public void setHashValue(String key, Object hKey, Object value) {
-        redisTemplate.opsForHash().put(key, hKey, value);
+        redisTemplate.opsForHash().put(key, hKey, jsonSerialize.getJson(value));
     }
 
     /**
