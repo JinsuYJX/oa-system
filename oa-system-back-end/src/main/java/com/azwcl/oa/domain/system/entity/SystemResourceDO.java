@@ -44,4 +44,14 @@ public class SystemResourceDO {
      * 可访问角色 id 集合
      */
     private List<Integer> rolesId;
+    
+    /**
+     * 判断 角色id 是否有权限
+     *
+     * @param roleId 角色 id
+     * @return true - 有；false - 无
+     */
+    public boolean isHavePermission(Integer roleId) {
+        return rolesId.contains(roleId);
+    }
 }

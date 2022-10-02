@@ -38,10 +38,10 @@ public class PersonAuth {
     private String password;
 
     /**
-     * 登录类型
+     * 认证方式
      */
-    @TableField("login_type")
-    private Integer loginType;
+    @TableField("auth_type")
+    private Integer authType;
 
     /**
      * 创建日期
