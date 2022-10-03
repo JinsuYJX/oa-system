@@ -58,6 +58,7 @@ public class AuthorizationFilter implements Filter {
         if (Objects.isNull(roles)) {
             // 匿名
             filterChain.doFilter(servletRequest, servletResponse);
+            return;
         }
 
         // 获取该 id 有的角色
@@ -71,6 +72,7 @@ public class AuthorizationFilter implements Filter {
         for (Integer loginPersonRole : loginPersonRoles) {
             if (roles.contains(loginPersonRole)) {
                 filterChain.doFilter(servletRequest, servletResponse);
+                return;
             }
         }
         // 无权限

@@ -1,5 +1,6 @@
 package com.azwcl.oa.interfaces.user.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,6 +15,16 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 public class UserDetailsVO {
+    /**
+     * token
+     */
     private String token;
+
+
+    /**
+     * 人员信息 vo
+     */
+    private PersonInfoVO info;
 }

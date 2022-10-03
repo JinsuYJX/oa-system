@@ -1,5 +1,6 @@
 package com.azwcl.oa.infrastructure.config;
 
+import com.azwcl.oa.infrastructure.common.enums.HttpStatus;
 import com.azwcl.oa.infrastructure.common.model.FailureResponseBody;
 import com.azwcl.oa.infrastructure.exception.AssertionException;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class GlobalExceptionConfig {
         }
         else {
             log.error(e.getMessage(), e);
-            return ResponseEntity.status(-999).body(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR.getHttpStatus()).body(e);
         }
     }
 }

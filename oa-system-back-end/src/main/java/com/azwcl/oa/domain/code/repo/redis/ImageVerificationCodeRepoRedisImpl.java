@@ -31,6 +31,11 @@ public class ImageVerificationCodeRepoRedisImpl implements ImageVerificationCode
 
     @Override
     public ImageVerificationCode getByUid(String uid) {
-        return redisCache.getHashValue(ImageVerificationCode.class.getName(), uid, ImageVerificationCode.class);
+        return redisCache.getHashValue(ImageVerificationCode.class.getSimpleName(), uid, ImageVerificationCode.class);
+    }
+
+    @Override
+    public void deleteByUid(String uid) {
+        redisCache.deleteHashValue(ImageVerificationCode.class.getSimpleName(), uid);
     }
 }

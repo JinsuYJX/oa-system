@@ -16,5 +16,5 @@ public interface PersonAuthRepo extends BaseRepo<PersonAuth> {
      * @param username username
      * @return 返回 person_auth 验证
      */
-    PersonAuth findByUsername(String username);
+    PersonAuth getByUsername(String username);
 }

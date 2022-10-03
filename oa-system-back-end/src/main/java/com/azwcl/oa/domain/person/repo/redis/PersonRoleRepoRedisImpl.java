@@ -14,19 +14,19 @@ import org.springframework.stereotype.Repository;
  * @date 2022/10/02
  */
 
-@Repository
+@Repository("PersonRoleRepoRedisImpl")
 @RequiredArgsConstructor
 public class PersonRoleRepoRedisImpl implements PersonRoleRepo {
 
     private final RedisCache redisCache;
 
     @Override
-    public void saveAlreadyLoginPerson(UserRolesDO userRoles) {
-        redisCache.setHashValue(PersonRole.class.getSimpleName(), userRoles.getPersonId(), UserRolesDO.class);
+    public void saveUserRolesDo(UserRolesDO userRoles) {
+        redisCache.setHashValue(PersonRole.class.getSimpleName(), userRoles.getPersonId().toString(), userRoles);
     }
 
     @Override
     public UserRolesDO getAlreadyLoginPersonRolesByPersonId(Number id) {
-        return redisCache.getHashValue(PersonRole.class.getSimpleName(), id, UserRolesDO.class);
+        return redisCache.getHashValue(PersonRole.class.getSimpleName(), id.toString(), UserRolesDO.class);
     }
 }

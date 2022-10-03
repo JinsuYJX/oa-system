@@ -31,6 +31,9 @@ public class RedisCache {
      * @param value hash 值
      */
     public void setHashValue(String key, Object hKey, Object value) {
+        if(hKey instanceof Number) {
+            hKey = hKey.toString();
+        }
         redisTemplate.opsForHash().put(key, hKey, jsonSerialize.getJson(value));
     }
 
@@ -42,6 +45,10 @@ public class RedisCache {
      * @return hash 值
      */
     public  <T> T getHashValue(String key, Object hKey, Class<T> clazz) {
+        if(hKey instanceof Number) {
+            hKey = hKey.toString();
+        }
+
         Object o = redisTemplate.opsForHash().get(key, hKey);
 
         if(Objects.isNull(o)) {

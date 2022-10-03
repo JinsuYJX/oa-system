@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Objects;
+
 /**
  * person_auth table
  *
@@ -66,4 +68,20 @@ public class PersonAuth {
      */
     @TableField("update_time")
     private Integer updateTime;
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) {
+            return true;
+        }
+
+        if(!(obj instanceof PersonAuth)) {
+            return false;
+        }
+
+        PersonAuth inputAuth = (PersonAuth) obj;
+
+        return Objects.equals(this.authType, inputAuth.getAuthType()) && Objects.equals(this.username, inputAuth.getUsername())
+                && Objects.equals(this.password, inputAuth.getPassword());
+    }
 }

@@ -2,15 +2,16 @@ package com.azwcl.oa.domain.system.service;
 
 import com.azwcl.oa.domain.system.entity.SystemResourceDO;
 import com.azwcl.oa.domain.system.repo.SystemResourceRepo;
+import com.azwcl.oa.infrastructure.common.enums.BooleanValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.AntPathMatcher;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 系统资源 service
@@ -60,15 +61,14 @@ public class SystemResourceService {
     public Collection<Integer> getHavePermissionRoles(String method, String url) {
         Map<String, SystemResourceDO> urlSystemResources = allSystemResources.get(method);
 
-        if(CollectionUtils.isEmpty(urlSystemResources)) {
-            return null;
-        }
-
         AntPathMatcher matcher = new AntPathMatcher();
         for (Map.Entry<String, SystemResourceDO> entry : urlSystemResources.entrySet()) {
             String k = entry.getKey();
             SystemResourceDO v = entry.getValue();
             if (matcher.match(k, url)) {
+                if(Objects.equals(v.getIsAnonymous(), BooleanValue.TRUE.getValueInt())) {
+                    return null;
+                }
                 return v.getRolesId();
             }
         }

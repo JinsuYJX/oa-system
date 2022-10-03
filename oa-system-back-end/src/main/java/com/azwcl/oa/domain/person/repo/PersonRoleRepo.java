@@ -24,11 +24,11 @@ public interface PersonRoleRepo extends BaseRepo<PersonRole> {
     }
 
     /**
-     * 保存已经登陆用户
+     * 保存用户角色
      *
      * @param userRoles 用户角色
      */
-    default void saveAlreadyLoginPerson(UserRolesDO userRoles) {
+    default void saveUserRolesDo(UserRolesDO userRoles) {
 
     }
 

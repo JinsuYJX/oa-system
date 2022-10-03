@@ -1,6 +1,7 @@
 package com.azwcl.oa.domain.person.repo.po;
 
 import com.azwcl.oa.domain.person.model.enums.LoginTypeEnum;
+import com.azwcl.oa.infrastructure.utils.StringUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -35,4 +36,11 @@ public class PersonToken {
      * 登录时间
      */
     private Long time;
+
+    public PersonToken(Integer personId, LoginTypeEnum loginType) {
+        this.token = StringUtil.uuid();
+        this.personId = personId;
+        this.loginType = loginType;
+        this.time = System.currentTimeMillis();
+    }
 }

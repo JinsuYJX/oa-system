@@ -18,4 +18,11 @@ public interface ImageVerificationCodeRepo extends BaseRepo<ImageVerificationCod
      * @return 图片验证码
      */
     ImageVerificationCode getByUid(String uid);
+
+    /**
+     * 通过 uid 删除
+     *
+     * @param uid uid
+     */
+    void deleteByUid(String uid);
 }

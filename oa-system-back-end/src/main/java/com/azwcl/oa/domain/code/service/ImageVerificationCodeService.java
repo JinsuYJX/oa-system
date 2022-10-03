@@ -10,6 +10,8 @@ import com.google.code.kaptcha.Producer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 /**
  * 图片验证码 Service
  *
@@ -45,4 +47,21 @@ public class ImageVerificationCodeService {
 
         return codeDo;
     }
+
+    /**
+     * 通过 uid 获取图片验证码
+     *
+     * @param inputCodeDo 输入的验证码
+     * @return true - 有效：false - 无效
+     */
+    public boolean isValid(ImageVerificationCodeDO inputCodeDo) {
+        ImageVerificationCode saveCode = imageVerificationCodeRepo.getByUid(inputCodeDo.getUid());
+        if (Objects.isNull(saveCode)) {
+            return false;
+        }
+        // 校验同时删除原来的验证码
+        imageVerificationCodeRepo.deleteByUid(saveCode.getUid());
+        return inputCodeDo.isValid(saveCode, messageSourceUtil);
+    }
+
 }

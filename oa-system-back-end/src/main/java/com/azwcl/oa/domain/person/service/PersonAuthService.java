@@ -1,7 +1,5 @@
 package com.azwcl.oa.domain.person.service;
 
-import com.azwcl.oa.domain.person.converter.ToUserDetailsDoConverter;
-import com.azwcl.oa.domain.person.entity.UserDetailsDO;
 import com.azwcl.oa.domain.person.entity.UserRolesDO;
 import com.azwcl.oa.domain.person.repo.PersonAuthRepo;
 import com.azwcl.oa.domain.person.repo.PersonRoleRepo;
@@ -32,16 +30,6 @@ public class PersonAuthService {
     @Resource(name = "PersonRoleRepoDbImpl")
     private PersonRoleRepo personRoleRedisRepo;
 
-    /**
-     * 获取人员的详细
-     *
-     * @param username 用户名
-     * @return 人员认证信息
-     */
-    public UserDetailsDO getUserDetails(String username) {
-        PersonAuth user = personAuthRepo.findByUsername(username);
-        return ToUserDetailsDoConverter.CONVERTER.toUserDetailsDo(user);
-    }
 
     /**
      * 通过 token 获取用户 id
@@ -70,5 +58,15 @@ public class PersonAuthService {
         } else {
             return alreadyLoginPersonRolesByPersonId.getRoles();
         }
+    }
+
+    /**
+     * 认证
+     *
+     * @param inputAuth 输入的认证信息
+     * @return 返回获取的人员认证信息
+     */
+    public PersonAuth getPersonAuthentication(PersonAuth inputAuth) {
+        return personAuthRepo.getByUsername(inputAuth.getUsername());
     }
 }
