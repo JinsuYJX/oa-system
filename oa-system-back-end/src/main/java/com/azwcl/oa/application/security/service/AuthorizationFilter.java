@@ -57,7 +57,7 @@ public class AuthorizationFilter implements Filter {
         Collection<Integer> roles = systemResourceService.getHavePermissionRoles(request.getMethod(), request.getRequestURI());
         if (Objects.isNull(roles)) {
             // 匿名
-            filterChain.doFilter(servletRequest, servletResponse);
+            filterChain.doFilter(request, response);
             return;
         }
 
@@ -71,7 +71,7 @@ public class AuthorizationFilter implements Filter {
 
         for (Integer loginPersonRole : loginPersonRoles) {
             if (roles.contains(loginPersonRole)) {
-                filterChain.doFilter(servletRequest, servletResponse);
+                filterChain.doFilter(request, response);
                 return;
             }
         }

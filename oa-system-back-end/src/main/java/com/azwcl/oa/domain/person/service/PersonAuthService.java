@@ -27,7 +27,7 @@ public class PersonAuthService {
 
     private final PersonTokenRepo personTokenRepo;
 
-    @Resource(name = "PersonRoleRepoDbImpl")
+    @Resource(name = "PersonRoleRepoRedisImpl")
     private PersonRoleRepo personRoleRedisRepo;
 
 

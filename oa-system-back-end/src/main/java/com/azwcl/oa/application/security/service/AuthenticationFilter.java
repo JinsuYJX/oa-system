@@ -13,7 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -43,13 +42,18 @@ public class AuthenticationFilter implements Filter {
         CustomRequestWrapper requestWrapper = new CustomRequestWrapper(request);
 
         // 获取 token
-        String token = requestWrapper.getHeader("token");
+        String token = ((HttpServletRequest) servletRequest).getHeader("token");
         if (Objects.isNull(token)) {
             requestWrapper.addHeader("id", "-1");
             filterChain.doFilter(requestWrapper, servletResponse);
         } else {
             Integer personId = personAuthService.getPersonIdByToken(token);
-            requestWrapper.addHeader("id", String.valueOf(personId));
+            if(Objects.isNull(personId)) {
+                requestWrapper.addHeader("id", "-1");
+            }
+            else {
+                requestWrapper.addHeader("id", String.valueOf(personId));
+            }
             filterChain.doFilter(requestWrapper, servletResponse);
         }
     }
@@ -57,10 +61,5 @@ public class AuthenticationFilter implements Filter {
     @Override
     public void destroy() {
         Filter.super.destroy();
-    }
-
-    private void addHeader(HttpServletRequest request, String key, String val) {
-        HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(request);
-
     }
 }

@@ -78,4 +78,10 @@ public class SystemResource {
      */
     @TableField("update_time")
     private Integer updateTime;
+
+    /**
+     * 是否默认权限
+     */
+    @TableField("is_default")
+    private Integer isDefault;
 }

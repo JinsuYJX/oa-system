@@ -71,4 +71,10 @@ public class SystemMenu {
      */
     @TableField("status")
     private Integer status;
+
+    /**
+     * 是否默认菜单
+     */
+    @TableField("is_default")
+    private Integer isDefault;
 }

@@ -22,11 +22,11 @@ public class PersonRoleRepoRedisImpl implements PersonRoleRepo {
 
     @Override
     public void saveUserRolesDo(UserRolesDO userRoles) {
-        redisCache.setHashValue(PersonRole.class.getSimpleName(), userRoles.getPersonId().toString(), userRoles);
+        redisCache.setHashValue(PersonRole.class.getSimpleName(), userRoles.getPersonId(), userRoles);
     }
 
     @Override
     public UserRolesDO getAlreadyLoginPersonRolesByPersonId(Number id) {
-        return redisCache.getHashValue(PersonRole.class.getSimpleName(), id.toString(), UserRolesDO.class);
+        return redisCache.getHashValue(PersonRole.class.getSimpleName(), id, UserRolesDO.class);
     }
 }

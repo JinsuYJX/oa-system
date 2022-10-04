@@ -29,4 +29,10 @@ public class SystemRoleResource {
      */
     @TableField("resource_id")
     private Integer resourceId;
+
+    /**
+     * 是否只读
+     */
+    @TableField("is_only_read")
+    private Integer isOnlyRead;
 }

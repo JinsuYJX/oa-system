@@ -40,7 +40,7 @@ CREATE TABLE `system_role`
 -- --------------------------------------------------------------------------
 -- records of system_role
 -- --------------------------------------------------------------------------
-INSERT INTO system_role (`id`, `name`, `describe`, `create_date`, `create_time`, `create_person`,`update_date`, `update_time`, `update_person`, `remark`) VALUES ('1000', '超级管理员', '超级管理员', '20220920', '2000', '1000000', '20220920', '2000', '1000000', '无');
+INSERT INTO system_role (`id`, `name`, `describe`, `create_date`, `create_time`, `create_person`,`update_date`, `update_time`, `update_person`, `remark`) VALUES ('1000', '超级管理员', '超级管理员', '20220920', '200000', '1000000', '20220920', '200000', '1000000', '无');
 
 -- --------------------------------------------------------------------------
 -- table structure for system_menu
@@ -57,12 +57,21 @@ CREATE TABLE `system_menu`
     `create_time` INT                                                                       NOT NULL COMMENT '创建时间',
     `parent_id`   INT                                                           DEFAULT -1  NOT NULL COMMENT '父id，无则 -1',
     `status`      CHAR(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci      DEFAULT 0   NOT NULL COMMENT '菜单状态',
+    `is_default`  TINYINT                                                       DEFAULT 0   NOT NULL COMMENT '是否默认权限',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1000
   CHARACTER SET = utf8mb4
   COLLATE utf8mb4_0900_ai_ci COMMENT '系统菜单表'
   ROW_FORMAT = DYNAMIC;
+
+-- --------------------------------------------------------------------------
+-- records of system_role
+-- --------------------------------------------------------------------------
+INSERT INTO system_menu (`id`, `name`, `path`, `component`, `icon`, `create_date`, `create_time`, `parent_id`, `status`, `is_default`) VALUES ('1000', '权限管理', '/permission', 'role.vue', 'el-icon', '20221003', '220500', '-1', '0', '0');
+INSERT INTO system_menu (`id`, `name`, `path`, `component`, `icon`, `create_date`, `create_time`, `parent_id`, `status`, `is_default`) VALUES ('1001', '角色管理', '/permission/roles', 'roles.vue', 'el-icon', '20221003', '220500', '1000', '0', '0');
+INSERT INTO system_menu (`id`, `name`, `path`, `component`, `icon`, `create_date`, `create_time`, `parent_id`, `status`, `is_default`) VALUES ('1002', '菜单管理', '/permission/menus', 'menus.vue', 'el-icon', '20221003', '220500', '1000', '0', '0');
+INSERT INTO system_menu (`id`, `name`, `path`, `component`, `icon`, `create_date`, `create_time`, `parent_id`, `status`, `is_default`) VALUES ('1003', '个人中心', '/user/', 'user.vue', 'el-icon', '20221004', '070300', '-1', '0', '1');
 
 -- --------------------------------------------------------------------------
 -- table structure for system_resource
@@ -81,6 +90,7 @@ CREATE TABLE `system_resource`
     `create_time`    INT                                                           NOT NULL COMMENT '创建时间',
     `update_date`    INT                                                           NOT NULL COMMENT '修改日期',
     `update_time`    INT                                                           NOT NULL COMMENT '修改时间',
+    `is_default`     TINYINT DEFAULT 0                                             NOT NULL COMMENT '是否默认权限',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1000
@@ -91,8 +101,9 @@ CREATE TABLE `system_resource`
 -- --------------------------------------------------------------------------
 -- records of system_resource
 -- --------------------------------------------------------------------------
-INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`) VALUES (100, '登录图片验证码获取', '/login/code/image', '-1','login:image-code', 'GET', '1', '20220920', '2000', '20220920', '2000');
-INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`) VALUES (101, '登录接口', '/login', '-1', 'login', 'POST', '1', '20221003', '0729', '20221003', '0729');
+INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1000, '登录图片验证码获取', '/login/code/image', '-1','login:image-code', 'GET', '1', '20220920', '2000', '20220920', '2000', '0');
+INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1001, '登录接口', '/login', '-1', 'login', 'POST', '1', '20221003', '0729', '20221003', '0729', '0');
+INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1002, '获取自己菜单', '/user/menu', '1003', 'user:menu', 'GET', '0', '20221004', '070300', '20221004', '070300', '1');
 
 -- --------------------------------------------------------------------------
 -- table structure for system_role_resource
@@ -100,13 +111,42 @@ INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `requ
 DROP TABLE IF EXISTS `system_role_resource`;
 CREATE TABLE `system_role_resource`
 (
-    `role_id`     INT NOT NULL COMMENT '角色序号',
-    `resource_id` INT NOT NULL COMMENT '资源序号',
+    `role_id`      INT               NOT NULL COMMENT '角色序号',
+    `resource_id`  INT               NOT NULL COMMENT '资源序号',
+    `is_only_read` TINYINT DEFAULT 0 NOT NULL COMMENT '是否只读',
     PRIMARY KEY (`role_id`, `resource_id`)
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4
   COLLATE utf8mb4_0900_ai_ci COMMENT '系统角色资源表'
   ROW_FORMAT = DYNAMIC;
+
+-- --------------------------------------------------------------------------
+-- records of system_role_resource
+-- --------------------------------------------------------------------------
+INSERT INTO system_role_resource (`role_id`, `resource_id`, `is_only_read`) VALUES ('1000', '1002', '1');
+
+-- --------------------------------------------------------------------------
+-- table structure for system_role_menu
+-- --------------------------------------------------------------------------
+DROP TABLE IF EXISTS `system_role_menu`;
+CREATE TABLE `system_role_menu`
+(
+    `role_id`      INT               NOT NULL COMMENT '角色序号',
+    `menu_id`      INT               NOT NULL COMMENT '菜单序号',
+    `is_only_read` TINYINT DEFAULT 0 NOT NULL COMMENT '是否只读',
+    PRIMARY KEY (`role_id`, `menu_id`)
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE utf8mb4_0900_ai_ci COMMENT '系统角色菜单表'
+  ROW_FORMAT = DYNAMIC;
+
+-- --------------------------------------------------------------------------
+-- records of system_role_menu
+-- --------------------------------------------------------------------------
+INSERT INTO `system_role_menu` (`role_id`, `menu_id`, `is_only_read`) VALUES ('1000', '1000', '0');
+INSERT INTO `system_role_menu` (`role_id`, `menu_id`, `is_only_read`) VALUES ('1000', '1001', '0');
+INSERT INTO `system_role_menu` (`role_id`, `menu_id`, `is_only_read`) VALUES ('1000', '1002', '0');
+INSERT INTO `system_role_menu` (`role_id`, `menu_id`, `is_only_read`) VALUES ('1000', '1003', '1');
 
 -- --------------------------------------------------------------------------
 -- table structure for person_info
@@ -135,6 +175,9 @@ CREATE TABLE `person_info`
   CHARACTER SET = utf8mb4
   COLLATE utf8mb4_0900_ai_ci COMMENT '人员信息表'
   ROW_FORMAT = DYNAMIC;
+-- --------------------------------------------------------------------------
+-- table records for person_info
+-- --------------------------------------------------------------------------
 
 -- --------------------------------------------------------------------------
 -- table structure for person_role

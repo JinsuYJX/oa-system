@@ -2,7 +2,10 @@ package com.azwcl.oa.application.security.model;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,6 +30,30 @@ public class CustomRequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public String getHeader(String name) {
-        return headers.get(name);
+        String val = super.getHeader(name);
+        if (headers.containsKey(name)) {
+            val = headers.get(name);
+        }
+        return val;
+    }
+
+
+    @Override
+    public Enumeration<String> getHeaderNames() {
+        List<String> names= Collections.list(super.getHeaderNames());
+        names.addAll(headers.keySet());
+
+        return Collections.enumeration(names);
+    }
+
+    @Override
+    public Enumeration<String> getHeaders(String name) {
+        List<String> list= Collections.list(super.getHeaders(name));
+
+        if (headers.containsKey(name)){
+            list.add(headers.get(name));
+        }
+
+        return Collections.enumeration(list);
     }
 }

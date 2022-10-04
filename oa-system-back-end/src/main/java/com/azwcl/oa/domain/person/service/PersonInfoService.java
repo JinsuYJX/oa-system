@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collection;
+import java.util.Objects;
 
 /**
  * 人员信息 service
@@ -65,4 +67,20 @@ public class PersonInfoService {
         this.personTokenRepo.save(token);
         return token;
     }
+
+    /**
+     * 通过人员 id 获取 角色 id
+     *
+     * @param personId 人员 id
+     * @return 角色 id
+     */
+    public Collection<Integer> getRolesIdByPersonId(Integer personId) {
+        UserRolesDO userRoles = personRoleRedisRepo.getAlreadyLoginPersonRolesByPersonId(personId);
+        if (Objects.isNull(userRoles)) {
+            userRoles = personRoleDbRepo.getUserRoleDoByPersonId(personId);
+            personRoleRedisRepo.saveUserRolesDo(userRoles);
+        }
+        return userRoles.getRoles();
+    }
+
 }
