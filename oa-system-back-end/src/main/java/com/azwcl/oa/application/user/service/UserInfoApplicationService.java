@@ -7,7 +7,6 @@ import com.azwcl.oa.domain.system.service.SystemMenuService;
 import com.azwcl.oa.interfaces.user.vo.UserMenuVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,17 +52,13 @@ public class UserInfoApplicationService {
             if (each.getParentId().equals(-1)) {
                 returnData.add(each);
             }
-
-            for (UserMenuVO child : userMenus) {
-                if (Objects.equals(child.getParentId(), each.getId())) {
-                    List<UserMenuVO> children = each.getChildren();
-                    if (CollectionUtils.isEmpty(children)) {
-                        children = new ArrayList<>();
-                    }
-                    children.add(child);
-                    each.setChildren(children);
-                }
-            }
+            // 过滤出孩子
+            List<UserMenuVO> children = userMenus
+                    .stream()
+                    .filter(obj -> Objects.equals(obj.getParentId(), each.getId()))
+                    .collect(Collectors.toList());
+            // 设置
+            each.addChild(children);
         }
 
         return returnData;
