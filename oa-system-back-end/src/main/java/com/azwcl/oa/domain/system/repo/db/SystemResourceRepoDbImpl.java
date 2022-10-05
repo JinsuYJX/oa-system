@@ -3,6 +3,9 @@ package com.azwcl.oa.domain.system.repo.db;
 import com.azwcl.oa.domain.system.entity.SystemResourceDO;
 import com.azwcl.oa.domain.system.repo.SystemResourceRepo;
 import com.azwcl.oa.domain.system.repo.mapper.SystemResourceMapper;
+import com.azwcl.oa.domain.system.repo.po.SystemResource;
+import com.azwcl.oa.infrastructure.common.enums.BooleanValue;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -25,4 +28,11 @@ public class SystemResourceRepoDbImpl implements SystemResourceRepo {
         return systemResourceMapper.listSystemResourceDo();
     }
 
+    @Override
+    public Collection<SystemResource> listDefaultResource() {
+        LambdaQueryWrapper<SystemResource> queryWrapper = new LambdaQueryWrapper<SystemResource>()
+                .eq(SystemResource::getIsDefault, BooleanValue.TRUE.getValueInt());
+
+        return systemResourceMapper.selectList(queryWrapper);
+    }
 }

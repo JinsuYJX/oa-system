@@ -2,6 +2,7 @@ package com.azwcl.oa.application.security.service;
 
 import com.azwcl.oa.application.security.model.CustomRequestWrapper;
 import com.azwcl.oa.domain.person.service.PersonAuthService;
+import com.azwcl.oa.infrastructure.utils.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -43,7 +44,7 @@ public class AuthenticationFilter implements Filter {
 
         // 获取 token
         String token = ((HttpServletRequest) servletRequest).getHeader("token");
-        if (Objects.isNull(token)) {
+        if (StringUtil.isEmpty(token)) {
             requestWrapper.addHeader("id", "-1");
             filterChain.doFilter(requestWrapper, servletResponse);
         } else {

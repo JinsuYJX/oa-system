@@ -1,7 +1,7 @@
 package com.azwcl.oa.infrastructure.exception;
 
-import com.azwcl.oa.infrastructure.common.enums.HttpStatus;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 /**
  * 自定义的断言异常
@@ -38,7 +38,7 @@ public class AssertionException extends RuntimeException {
      */
     public AssertionException(HttpStatus status, Integer code, String message) {
         super(message);
-        this.httpStatus = status.getHttpStatus();
+        this.httpStatus = status.value();
         this.code = code;
         this.message = message;
     }

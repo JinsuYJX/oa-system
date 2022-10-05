@@ -1,6 +1,12 @@
 package com.azwcl.oa.domain.system.repo.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * system_role_menu
@@ -9,6 +15,12 @@ import com.baomidou.mybatisplus.annotation.TableField;
  * @date 2022/10/04
  */
 
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName("system_role_menu")
 public class SystemRoleMenu {
 
     /**

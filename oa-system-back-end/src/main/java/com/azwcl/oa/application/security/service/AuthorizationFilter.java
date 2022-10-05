@@ -1,13 +1,13 @@
 package com.azwcl.oa.application.security.service;
 
 import com.azwcl.oa.application.security.model.CustomRequestWrapper;
-import com.azwcl.oa.domain.person.service.PersonAuthService;
+import com.azwcl.oa.domain.person.service.PersonInfoService;
 import com.azwcl.oa.domain.system.service.SystemResourceService;
-import com.azwcl.oa.infrastructure.common.enums.HttpStatus;
 import com.azwcl.oa.infrastructure.common.model.FailureResponseBody;
 import com.azwcl.oa.infrastructure.utils.JsonSerialize;
 import com.azwcl.oa.infrastructure.utils.MessageSourceUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
@@ -19,7 +19,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -35,7 +34,7 @@ public class AuthorizationFilter implements Filter {
 
     private final SystemResourceService systemResourceService;
 
-    private final PersonAuthService personAuthService;
+    private final PersonInfoService personInfoService;
 
     private final MessageSourceUtil messageSourceUtil;
 
@@ -62,9 +61,9 @@ public class AuthorizationFilter implements Filter {
         }
 
         // 获取该 id 有的角色
-        List<Integer> loginPersonRoles = personAuthService.getLoginPersonRolesByPersonId(id);
+        Collection<Integer> loginPersonRoles = personInfoService.getRolesIdByPersonId(id);
         if (Objects.isNull(loginPersonRoles)) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.getHttpStatus());
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.getOutputStream().write(jsonSerialize.getJson(new FailureResponseBody(100001, messageSourceUtil.getMessage("100001"))).getBytes());
             return;
         }
@@ -76,7 +75,7 @@ public class AuthorizationFilter implements Filter {
             }
         }
         // 无权限
-        response.setStatus(HttpStatus.UNAUTHORIZED.getHttpStatus());
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.getOutputStream().write(jsonSerialize.getJson(new FailureResponseBody(100001, messageSourceUtil.getMessage("100001"))).getBytes());
     }
 
@@ -84,5 +83,4 @@ public class AuthorizationFilter implements Filter {
     public void destroy() {
         Filter.super.destroy();
     }
-
 }

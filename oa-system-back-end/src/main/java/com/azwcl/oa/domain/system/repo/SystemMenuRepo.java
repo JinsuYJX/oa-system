@@ -21,4 +21,11 @@ public interface SystemMenuRepo extends BaseRepo<SystemMenu> {
      * @return 菜单
      */
     Collection<SystemMenu> getRoleMenu(Collection<Integer> roleId);
+
+    /**
+     * 获取默认菜单
+     *
+     * @return 默认菜单
+     */
+    Collection<SystemMenu> getDefaultMenu();
 }

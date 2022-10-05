@@ -1,6 +1,7 @@
 package com.azwcl.oa.domain.system.repo.mapper;
 
 import com.azwcl.oa.domain.system.repo.po.SystemMenu;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,7 +15,7 @@ import java.util.Collection;
  */
 
 @Mapper
-public interface SystemMenuMapper {
+public interface SystemMenuMapper extends BaseMapper<SystemMenu> {
     /**
      * 通过角色id获取下面的系统菜单
      *

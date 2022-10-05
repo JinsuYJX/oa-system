@@ -28,4 +28,13 @@ public class SystemMenuService {
     public Collection<SystemMenu> getRoleMenu(Collection<Integer> roles) {
         return systemMenuRepo.getRoleMenu(roles);
     }
+
+    /**
+     * 获取默认菜单
+     *
+     * @return 默认菜单
+     */
+    public Collection<SystemMenu> getDefaultMenu() {
+        return systemMenuRepo.getDefaultMenu();
+    }
 }

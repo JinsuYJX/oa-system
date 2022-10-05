@@ -22,4 +22,11 @@ public interface SystemResourceRepo extends BaseRepo<SystemResource> {
      * @return 全部系统资源
      */
     Collection<SystemResourceDO> listSystemResourceDo();
+
+    /**
+     * 获取默认资源
+     *
+     * @return 默认资源
+     */
+    Collection<SystemResource> listDefaultResource();
 }

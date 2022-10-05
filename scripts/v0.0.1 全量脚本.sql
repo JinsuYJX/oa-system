@@ -104,6 +104,7 @@ CREATE TABLE `system_resource`
 INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1000, '登录图片验证码获取', '/login/code/image', '-1','login:image-code', 'GET', '1', '20220920', '2000', '20220920', '2000', '0');
 INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1001, '登录接口', '/login', '-1', 'login', 'POST', '1', '20221003', '0729', '20221003', '0729', '0');
 INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1002, '获取自己菜单', '/user/menu', '1003', 'user:menu', 'GET', '0', '20221004', '070300', '20221004', '070300', '1');
+INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1003, '新建角色', '/permission/role', '1001', 'permission:role', 'POST', '0', '20221005', '140300', '20221005', '140300', '0');
 
 -- --------------------------------------------------------------------------
 -- table structure for system_role_resource
@@ -124,6 +125,7 @@ CREATE TABLE `system_role_resource`
 -- records of system_role_resource
 -- --------------------------------------------------------------------------
 INSERT INTO system_role_resource (`role_id`, `resource_id`, `is_only_read`) VALUES ('1000', '1002', '1');
+INSERT INTO system_role_resource (`role_id`, `resource_id`, `is_only_read`) VALUES ('1000', '1003', '0');
 
 -- --------------------------------------------------------------------------
 -- table structure for system_role_menu
@@ -157,7 +159,6 @@ CREATE TABLE `person_info`
     `id`            INT                                                                                 NOT NULL AUTO_INCREMENT COMMENT '唯一序号',
     `name`          VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci                        NOT NULL COMMENT '姓名',
     `nickname`      VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci                       NULL COMMENT '昵称',
-    `password`      CHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci                           NOT NULL COMMENT '密码',
     `email`         VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci                       NULL COMMENT '邮箱',
     `phone`         CHAR(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci                           NULL COMMENT '手机号',
     `sex`           CHAR(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci      DEFAULT '0'           NOT NULL COMMENT '性别',
@@ -178,6 +179,7 @@ CREATE TABLE `person_info`
 -- --------------------------------------------------------------------------
 -- table records for person_info
 -- --------------------------------------------------------------------------
+INSERT INTO person_info (`id`, `name`, `nickname`, `email`, `phone`, `sex`, `avatar`, `create_date`, `create_time`, `update_date`, `update_time`, `update_person`, `join_date`, `status`) VALUES ('1000', 'admin', 'admin', 'azwcl@outlook.com', '15656297586', '1', 'default.png', '20221111', '111100','20221111','111100','-1','20221111','0');
 
 -- --------------------------------------------------------------------------
 -- table structure for person_role
@@ -192,9 +194,13 @@ CREATE TABLE `person_role`
   CHARACTER SET = utf8mb4
   COLLATE utf8mb4_0900_ai_ci COMMENT '人员角色表'
   ROW_FORMAT = DYNAMIC;
+-- --------------------------------------------------------------------------
+-- table records for person_info
+-- --------------------------------------------------------------------------
+INSERT INTO person_role (`person_id`, `role_id`) VALUES ('1000','1000');
 
 -- ----------------------------
--- Table structure for person_auth
+-- table structure for person_auth
 -- ----------------------------
 DROP TABLE IF EXISTS `person_auth`;
 CREATE TABLE `person_auth`
@@ -211,3 +217,8 @@ CREATE TABLE `person_auth`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci COMMENT '人员认证表';
+
+-- ----------------------------
+-- table records for person_auth
+-- ----------------------------
+INSERT INTO person_auth (person_id, username, password, auth_type, create_date, create_time, update_date, update_time) VALUES ('1000', 'azwcl@outlook.com',	'd9b1d7db4cd6e70935368a1efb10e377',	'1', '20221111', '111100', '20221111', '111100');

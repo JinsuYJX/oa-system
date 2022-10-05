@@ -2,6 +2,7 @@ package com.azwcl.oa.domain.system.service;
 
 import com.azwcl.oa.domain.system.entity.SystemResourceDO;
 import com.azwcl.oa.domain.system.repo.SystemResourceRepo;
+import com.azwcl.oa.domain.system.repo.po.SystemResource;
 import com.azwcl.oa.infrastructure.common.enums.BooleanValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -74,5 +75,14 @@ public class SystemResourceService {
         }
 
         return null;
+    }
+
+    /**
+     * 获取默认资源
+     *
+     * @return 默认资源
+     */
+    public Collection<SystemResource> getDefaultResource() {
+        return systemResourceRepo.listDefaultResource();
     }
 }

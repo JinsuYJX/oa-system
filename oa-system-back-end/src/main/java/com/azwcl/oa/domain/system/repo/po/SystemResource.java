@@ -3,7 +3,9 @@ package com.azwcl.oa.domain.system.repo.po;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -17,6 +19,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("system_resource")
 public class SystemResource {
     /**
@@ -38,16 +42,22 @@ public class SystemResource {
     private String url;
 
     /**
+     * 菜单 id
+     */
+    @TableField("`menu_id`")
+    private Integer menuId;
+
+    /**
+     * 身份标识
+     */
+    @TableField("`identity`")
+    private String identity;
+
+    /**
      * 请求方法
      */
     @TableField("request_method")
     private String requestMethod;
-
-    /**
-     * 父资源 id
-     */
-    @TableField("parent_id")
-    private Integer parentId;
 
     /**
      * 是否匿名
