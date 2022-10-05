@@ -10,6 +10,7 @@ import org.springframework.util.AntPathMatcher;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -61,6 +62,10 @@ public class SystemResourceService {
      */
     public Collection<Integer> getHavePermissionRoles(String method, String url) {
         Map<String, SystemResourceDO> urlSystemResources = allSystemResources.get(method);
+
+        if (Objects.isNull(urlSystemResources)) {
+            return Collections.emptyList();
+        }
 
         AntPathMatcher matcher = new AntPathMatcher();
         for (Map.Entry<String, SystemResourceDO> entry : urlSystemResources.entrySet()) {

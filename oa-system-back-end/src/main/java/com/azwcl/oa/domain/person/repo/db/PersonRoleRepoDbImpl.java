@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,5 +36,12 @@ public class PersonRoleRepoDbImpl implements PersonRoleRepo {
                 .collect(Collectors.toList());
 
         return new UserRolesDO(id.intValue(), roles);
+    }
+
+    @Override
+    public List<PersonRole> getByRoles(Collection<Integer> roles) {
+        LambdaQueryWrapper<PersonRole> queryWrapper = new LambdaQueryWrapper<PersonRole>()
+                .in(PersonRole::getRoleId, roles);
+        return personRoleMapper.selectList(queryWrapper);
     }
 }

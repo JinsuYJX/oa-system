@@ -9,6 +9,7 @@ import com.azwcl.oa.domain.system.repo.po.SystemRoleResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -54,5 +55,11 @@ public class SystemRoleService {
      */
     public void saveRoleResource(Collection<SystemRoleResource> roleResources) {
         systemRoleResourceRepo.saveAll(roleResources);
+    }
+
+    public void deleteRole(Collection<Number> roles) {
+        systemRoleMenuRepo.deleteByRole(roles);
+        systemRoleResourceRepo.deleteByRole(roles);
+        systemRoleRepo.deleteByIds(new ArrayList<>(roles));
     }
 }

@@ -1,6 +1,8 @@
 package com.azwcl.oa.application.permission.service;
 
 import com.azwcl.oa.application.permission.converter.ToSystemRoleConverter;
+import com.azwcl.oa.domain.person.repo.po.PersonRole;
+import com.azwcl.oa.domain.person.service.PersonRoleService;
 import com.azwcl.oa.domain.system.repo.po.SystemMenu;
 import com.azwcl.oa.domain.system.repo.po.SystemResource;
 import com.azwcl.oa.domain.system.repo.po.SystemRole;
@@ -10,13 +12,18 @@ import com.azwcl.oa.domain.system.service.SystemMenuService;
 import com.azwcl.oa.domain.system.service.SystemResourceService;
 import com.azwcl.oa.domain.system.service.SystemRoleService;
 import com.azwcl.oa.infrastructure.common.enums.BooleanValue;
+import com.azwcl.oa.infrastructure.exception.AssertionException;
+import com.azwcl.oa.infrastructure.utils.MessageSourceUtil;
 import com.azwcl.oa.infrastructure.utils.TimeUtil;
 import com.azwcl.oa.interfaces.permission.dto.RoleCommand;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +42,10 @@ public class RoleManageApplicationService {
     private final SystemMenuService systemMenuService;
 
     private final SystemResourceService systemResourceService;
+
+    private final PersonRoleService personRoleService;
+
+    private final MessageSourceUtil messageSourceUtil;
 
     /**
      * 添加一个新角色
@@ -68,5 +79,18 @@ public class RoleManageApplicationService {
         systemRoleService.saveRoleMenu(roleMenus);
         systemRoleService.saveRoleResource(roleResources);
         return roleId;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteRole(Integer roleId) {
+        // 角色下是否有使用人
+        List<PersonRole> personRoles = personRoleService.getPersonRoleByRoleIds(Collections.singleton(roleId));
+        if (!CollectionUtils.isEmpty(personRoles)) {
+            Object[] args = new Object[]{personRoles.get(0).getRoleId(), personRoles.get(0).getPersonId()};
+            throw new AssertionException(HttpStatus.INTERNAL_SERVER_ERROR.value(), messageSourceUtil.getMessage("500000", args));
+        }
+
+        // 删除该角色
+        systemRoleService.deleteRole(Collections.singleton(roleId));
     }
 }

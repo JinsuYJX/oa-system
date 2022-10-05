@@ -4,6 +4,7 @@ import com.azwcl.oa.application.permission.service.RoleManageApplicationService;
 import com.azwcl.oa.interfaces.permission.dto.RoleCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,5 +36,16 @@ public class RoleManageController {
     @ResponseStatus(HttpStatus.CREATED)
     public Integer createRole(@RequestBody RoleCommand command, @RequestHeader("id") Integer userId) {
         return roleManageApplicationService.addNewRole(command, userId);
+    }
+
+    /**
+     * 删除角色
+     *
+     * @param roleId 角色 id
+     */
+
+    @RequestMapping(value = "/{roleId}", method = RequestMethod.DELETE)
+    public void deleteRole(@PathVariable("roleId") Integer roleId) {
+        roleManageApplicationService.deleteRole(roleId);
     }
 }

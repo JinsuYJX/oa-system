@@ -4,6 +4,10 @@ import com.azwcl.oa.domain.person.entity.UserRolesDO;
 import com.azwcl.oa.domain.person.repo.po.PersonRole;
 import com.azwcl.oa.infrastructure.repo.BaseRepo;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * 用户角色 repo
  *
@@ -40,5 +44,15 @@ public interface PersonRoleRepo extends BaseRepo<PersonRole> {
      */
     default UserRolesDO getAlreadyLoginPersonRolesByPersonId(Number id) {
         return null;
+    }
+
+    /**
+     * 通过角色获取
+     *
+     * @param roles 角色 id
+     * @return 返回
+     */
+    default List<PersonRole> getByRoles(Collection<Integer> roles) {
+        return Collections.emptyList();
     }
 }
