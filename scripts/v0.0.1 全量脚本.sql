@@ -101,10 +101,10 @@ CREATE TABLE `system_resource`
 -- --------------------------------------------------------------------------
 -- records of system_resource
 -- --------------------------------------------------------------------------
-INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1000, '登录图片验证码获取', '/login/code/image', '-1','login:image-code', 'GET', '1', '20220920', '2000', '20220920', '2000', '0');
+INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1000, '登录图片验证码获取', '/login/code/image', '-1','login:image-code:get', 'GET', '1', '20220920', '2000', '20220920', '2000', '0');
 INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1001, '登录接口', '/login', '-1', 'login', 'POST', '1', '20221003', '0729', '20221003', '0729', '0');
-INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1002, '获取自己菜单', '/user/menu', '1003', 'user:menu', 'GET', '0', '20221004', '070300', '20221004', '070300', '1');
-INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1003, '新建角色', '/permission/role', '1001', 'permission:role', 'POST', '0', '20221005', '140300', '20221005', '140300', '0');
+INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1002, '获取自己菜单', '/user/menu', '1003', 'user:menu:get', 'GET', '0', '20221004', '070300', '20221004', '070300', '1');
+INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1003, '新建角色', '/permission/role', '1001', 'permission:role:create', 'POST', '0', '20221005', '140300', '20221005', '140300', '0');
 
 -- --------------------------------------------------------------------------
 -- table structure for system_role_resource
