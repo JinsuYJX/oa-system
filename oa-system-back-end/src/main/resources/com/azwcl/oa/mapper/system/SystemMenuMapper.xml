@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.azwcl.oa.domain.system.repo.mapper.SystemMenuMapper">
+
+    <select id="getByRoleId" resultType="com.azwcl.oa.domain.system.repo.po.SystemMenu">
+        SELECT
+        id,
+        name,
+        path,
+        component,
+        icon,
+        create_date AS createDate,
+        create_time AS createTime,
+        parent_id AS parentId,
+        status,
+        is_default AS isDefault
+        FROM system_menu
+        INNER JOIN system_role_menu ON system_menu.id = system_role_menu.menu_id
+        <if test="roles != null">
+            <where>
+                system_role_menu.role_id IN
+                <foreach collection="roles" index="index" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </where>
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.azwcl.oa.domain.system.repo.mapper.SystemRoleMapper">
+    <select id="querySystemRoleDO" resultType="com.azwcl.oa.domain.system.entity.SystemRoleDO">
+        SELECT sr.`id`,
+               sr.`name`,
+               sr.`describe`,
+               sr.`create_date` AS createDate,
+               sr.`create_time` AS createTime,
+               p1.`name` AS createPerson,
+               sr.`update_date` AS updateDate,
+               sr.`update_time` AS updateTime,
+               p2.`name` AS updatePerson,
+               sr.remark
+        FROM system_role sr
+                 LEFT JOIN person_info p1 ON p1.id = sr.create_person
+                 LEFT JOIN person_info p2 ON p2.id = sr.update_person
+        <if test="searchKey != null">
+            WHERE sr.`name` LIKE concat('%', #{searchKey, jdbcType=VARCHAR}, '%')
+        </if>
+    </select>
+</mapper>

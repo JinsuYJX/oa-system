@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.azwcl.oa.domain.system.repo.mapper.SystemRoleResourceMapper">
+    <insert id="saveAll">
+        INSERT INTO system_role_resource (role_id, resource_id, is_only_read) VALUES
+        <if test="list != null">
+            <foreach collection="list" separator="," item="item">
+                (#{item.roleId}, #{item.resourceId}, #{item.isOnlyRead})
+            </foreach>
+        </if>
+    </insert>
+</mapper>
