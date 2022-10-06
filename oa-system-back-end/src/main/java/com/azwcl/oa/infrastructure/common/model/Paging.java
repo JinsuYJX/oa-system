@@ -16,20 +16,21 @@ import java.util.Collections;
 @Getter
 @ToString
 public class Paging<T> {
-    /**
-     * 页大小
-     */
-    private final Integer pageSize;
 
     /**
      * 页码
      */
-    private final Integer pageNumber;
+    private final Long pageNumber;
+
+    /**
+     * 页大小
+     */
+    private final Long pageSize;
 
     /**
      * 记录总数
      */
-    private final Integer total;
+    private final Long total;
 
     /**
      * 记录数
@@ -37,7 +38,7 @@ public class Paging<T> {
     private final Collection<T> records;
 
 
-    public Paging(BaseQuery query, Integer total, Collection<T> records) {
+    public Paging(BaseQuery query, Long total, Collection<T> records) {
         this.pageSize = query.getPageSize();
         this.pageNumber = query.getPageNumber();
         this.total = total;
@@ -47,7 +48,7 @@ public class Paging<T> {
     public Paging(BaseQuery query) {
         this.pageSize = query.getPageSize();
         this.pageNumber = query.getPageNumber();
-        this.total = 0;
+        this.total = 0L;
         this.records = Collections.emptyList();
     }
 }

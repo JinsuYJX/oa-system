@@ -107,6 +107,7 @@ INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `requ
 INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1003, '新建角色', '/permission/role', '1001', 'permission:role:create', 'POST', '0', '20221005', '140300', '20221005', '140300', '0');
 INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1004, '删除角色', '/permission/role/{roleId}', '1001', 'permission:role:delete', 'DELETE', '0', '20221005', '140300', '20221005', '140300', '0');
 INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1005, '修改角色', '/permission/role/{roleId}', '1002', 'permission:role:update', 'PUT', '0', '20221006', '140300', '20221006', '140300', '0');
+INSERT INTO `system_resource` (`id`, `name`, `url`, `menu_id`, `identity`, `request_method`, `is_anonymous`, `create_date`, `create_time`, `update_date`, `update_time`, `is_default`) VALUES (1006, '查询角色', '/permission/role/query', '1002', 'permission:role:query', 'POST', '0', '20221006', '140300', '20221006', '140300', '0');
 
 -- --------------------------------------------------------------------------
 -- table structure for system_role_resource
@@ -130,6 +131,7 @@ INSERT INTO system_role_resource (`role_id`, `resource_id`, `is_only_read`) VALU
 INSERT INTO system_role_resource (`role_id`, `resource_id`, `is_only_read`) VALUES ('1000', '1003', '0');
 INSERT INTO system_role_resource (`role_id`, `resource_id`, `is_only_read`) VALUES ('1000', '1004', '0');
 INSERT INTO system_role_resource (`role_id`, `resource_id`, `is_only_read`) VALUES ('1000', '1005', '0');
+INSERT INTO system_role_resource (`role_id`, `resource_id`, `is_only_read`) VALUES ('1000', '1006', '0');
 
 -- --------------------------------------------------------------------------
 -- table structure for system_role_menu

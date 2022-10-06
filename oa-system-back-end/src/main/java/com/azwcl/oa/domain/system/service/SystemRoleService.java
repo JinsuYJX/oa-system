@@ -1,11 +1,14 @@
 package com.azwcl.oa.domain.system.service;
 
+import com.azwcl.oa.domain.system.entity.SystemRoleDO;
 import com.azwcl.oa.domain.system.repo.SystemRoleMenuRepo;
 import com.azwcl.oa.domain.system.repo.SystemRoleRepo;
 import com.azwcl.oa.domain.system.repo.SystemRoleResourceRepo;
 import com.azwcl.oa.domain.system.repo.po.SystemRole;
 import com.azwcl.oa.domain.system.repo.po.SystemRoleMenu;
 import com.azwcl.oa.domain.system.repo.po.SystemRoleResource;
+import com.azwcl.oa.infrastructure.common.model.BaseQuery;
+import com.azwcl.oa.infrastructure.common.model.Paging;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -75,5 +78,15 @@ public class SystemRoleService {
      */
     public void updateRole(SystemRole role) {
         systemRoleRepo.updateById(role);
+    }
+
+    /**
+     * 查询系统角色
+     *
+     * @param query 查询器
+     * @return 返回
+     */
+    public Paging<SystemRoleDO> querySystemRole(BaseQuery query) {
+        return systemRoleRepo.querySystemRoleDO(query);
     }
 }

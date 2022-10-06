@@ -1,8 +1,10 @@
 package com.azwcl.oa.application.permission.service;
 
+import com.azwcl.oa.application.permission.converter.ToRoleVoConverter;
 import com.azwcl.oa.application.permission.converter.ToSystemRoleConverter;
 import com.azwcl.oa.domain.person.repo.po.PersonRole;
 import com.azwcl.oa.domain.person.service.PersonRoleService;
+import com.azwcl.oa.domain.system.entity.SystemRoleDO;
 import com.azwcl.oa.domain.system.repo.po.SystemMenu;
 import com.azwcl.oa.domain.system.repo.po.SystemResource;
 import com.azwcl.oa.domain.system.repo.po.SystemRole;
@@ -12,10 +14,13 @@ import com.azwcl.oa.domain.system.service.SystemMenuService;
 import com.azwcl.oa.domain.system.service.SystemResourceService;
 import com.azwcl.oa.domain.system.service.SystemRoleService;
 import com.azwcl.oa.infrastructure.common.enums.BooleanValue;
+import com.azwcl.oa.infrastructure.common.model.Paging;
 import com.azwcl.oa.infrastructure.exception.AssertionException;
 import com.azwcl.oa.infrastructure.utils.MessageSourceUtil;
 import com.azwcl.oa.infrastructure.utils.TimeUtil;
 import com.azwcl.oa.interfaces.permission.dto.RoleCommand;
+import com.azwcl.oa.interfaces.permission.query.RoleQuery;
+import com.azwcl.oa.interfaces.permission.vo.RoleVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -108,5 +113,22 @@ public class RoleManageApplicationService {
     public void updateRole(RoleCommand command, Integer userId) {
         SystemRole role = ToSystemRoleConverter.CONVERTER.toSystemRoleOfUpdate(command, TimeUtil.getTodayDate(), TimeUtil.getNowTime(), userId);
         systemRoleService.updateRole(role);
+    }
+
+    /**
+     * 查询角色
+     *
+     * @param query 查询器
+     * @return 返回
+     */
+    public Paging<RoleVO> queryRoleList(RoleQuery query) {
+        Paging<SystemRoleDO> queryResult = systemRoleService.querySystemRole(query);
+
+        List<RoleVO> roles = queryResult.getRecords()
+                .stream()
+                .map(ToRoleVoConverter.CONVERTER::toRoleVo)
+                .collect(Collectors.toList());
+
+        return new Paging<>(query, queryResult.getTotal(), roles);
     }
 }
