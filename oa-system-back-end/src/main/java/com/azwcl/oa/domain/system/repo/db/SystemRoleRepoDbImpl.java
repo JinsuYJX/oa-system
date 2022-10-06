@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * system_role repo db impl
@@ -45,5 +46,13 @@ public class SystemRoleRepoDbImpl implements SystemRoleRepo {
                     .in(SystemRole::getId, ids);
             systemRoleMapper.delete(queryWrapper);
         }
+    }
+
+    @Override
+    public void updateById(SystemRole role) {
+        if(Objects.isNull(role.getId())) {
+            return;
+        }
+        systemRoleMapper.updateById(role);
     }
 }

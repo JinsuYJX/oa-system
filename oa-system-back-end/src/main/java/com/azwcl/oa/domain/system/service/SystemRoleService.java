@@ -57,9 +57,23 @@ public class SystemRoleService {
         systemRoleResourceRepo.saveAll(roleResources);
     }
 
+    /**
+     * 删除角色
+     *
+     * @param roles 角色
+     */
     public void deleteRole(Collection<Number> roles) {
         systemRoleMenuRepo.deleteByRole(roles);
         systemRoleResourceRepo.deleteByRole(roles);
         systemRoleRepo.deleteByIds(new ArrayList<>(roles));
+    }
+
+    /**
+     * 角色更新
+     *
+     * @param role 角色
+     */
+    public void updateRole(SystemRole role) {
+        systemRoleRepo.updateById(role);
     }
 }

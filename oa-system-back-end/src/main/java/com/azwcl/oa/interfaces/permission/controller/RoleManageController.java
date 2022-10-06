@@ -48,4 +48,17 @@ public class RoleManageController {
     public void deleteRole(@PathVariable("roleId") Integer roleId) {
         roleManageApplicationService.deleteRole(roleId);
     }
+
+    /**
+     * 修改角色
+     *
+     * @param command 角色command
+     * @param roleId  角色 id
+     * @param userId  用户 id
+     */
+    @RequestMapping(value = "/{roleId}", method = RequestMethod.PUT)
+    public void updateRole(@RequestBody RoleCommand command, @PathVariable("roleId") Integer roleId, @RequestHeader("id") Integer userId) {
+        command.setId(roleId);
+        roleManageApplicationService.updateRole(command, userId);
+    }
 }

@@ -51,13 +51,13 @@ public class RoleManageApplicationService {
      * 添加一个新角色
      *
      * @param command 角色 command
-     * @param userId 用户 id
+     * @param userId  用户 id
      * @return 返回新角色
      */
     @Transactional(rollbackFor = Exception.class)
     public Integer addNewRole(RoleCommand command, Integer userId) {
         // 添加新角色
-        SystemRole systemRole = ToSystemRoleConverter.CONVERTER.toSystemRole(command, TimeUtil.getTodayDate(), TimeUtil.getNowTime(), userId);
+        SystemRole systemRole = ToSystemRoleConverter.CONVERTER.toSystemRoleOfNew(command, TimeUtil.getTodayDate(), TimeUtil.getNowTime(), userId);
         Integer roleId = systemRoleService.addNewRole(systemRole);
 
         // 查询默认菜单
@@ -81,6 +81,11 @@ public class RoleManageApplicationService {
         return roleId;
     }
 
+    /**
+     * 删除角色
+     *
+     * @param roleId 角色 id
+     */
     @Transactional(rollbackFor = Exception.class)
     public void deleteRole(Integer roleId) {
         // 角色下是否有使用人
@@ -92,5 +97,16 @@ public class RoleManageApplicationService {
 
         // 删除该角色
         systemRoleService.deleteRole(Collections.singleton(roleId));
+    }
+
+    /**
+     * 修改角色
+     *
+     * @param command RoleCommand
+     * @param userId  角色 id
+     */
+    public void updateRole(RoleCommand command, Integer userId) {
+        SystemRole role = ToSystemRoleConverter.CONVERTER.toSystemRoleOfUpdate(command, TimeUtil.getTodayDate(), TimeUtil.getNowTime(), userId);
+        systemRoleService.updateRole(role);
     }
 }

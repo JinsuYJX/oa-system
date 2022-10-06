@@ -22,10 +22,11 @@ public interface ToSystemRoleConverter {
 
     /**
      * --> SystemRole
+     *
      * @param command RoleCommand
-     * @param today 今天
-     * @param time 时间
-     * @param userId 用户 id
+     * @param today   今天
+     * @param time    时间
+     * @param userId  用户 id
      * @return 返回
      */
     @Mapping(target = "id", source = "command.id")
@@ -38,5 +39,24 @@ public interface ToSystemRoleConverter {
     @Mapping(target = "updateTime", source = "time")
     @Mapping(target = "updatePerson", source = "userId")
     @Mapping(target = "remark", source = "command.remark")
-    SystemRole toSystemRole(RoleCommand command, Integer today, Integer time, Integer userId);
+    SystemRole toSystemRoleOfNew(RoleCommand command, Integer today, Integer time, Integer userId);
+
+    /**
+     * --> SystemRole
+     *
+     * @param command RoleCommand
+     * @param today   今天
+     * @param time    时间
+     * @param userId  用户 id
+     * @return 返回
+     */
+    @Mapping(target = "id", source = "command.id")
+    @Mapping(target = "name", source = "command.name")
+    @Mapping(target = "describe", source = "command.describe")
+    @Mapping(target = "remark", source = "command.remark")
+    @Mapping(target = "updateDate", source = "today")
+    @Mapping(target = "updateTime", source = "time")
+    @Mapping(target = "updatePerson", source = "userId")
+    SystemRole toSystemRoleOfUpdate(RoleCommand command, Integer today, Integer time, Integer userId);
+
 }
