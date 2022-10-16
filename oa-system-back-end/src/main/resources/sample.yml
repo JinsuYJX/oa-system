@@ -9,7 +9,10 @@ spring:
   messages:
     basename: i18n/messages
 
-
+mybatis-plus:
+  mapper-locations: classpath:com/azwcl/oa/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 mail:
   host:

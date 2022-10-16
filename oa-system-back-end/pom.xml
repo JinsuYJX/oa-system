@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>oa-system</name>
     <description>oa-system</description>
+    <packaging>jar</packaging>
     <properties>
         <java.version>11</java.version>
         <org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
@@ -132,6 +133,10 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
