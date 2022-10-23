@@ -79,7 +79,8 @@ public class SystemResourceService {
             }
         }
 
-        return null;
+        // 不在接口约束范围；直接返回空集合；
+        return Collections.emptyList();
     }
 
     /**
